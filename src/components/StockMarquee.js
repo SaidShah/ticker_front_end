@@ -13,9 +13,6 @@ class StockMarquee extends Component {
         fetch(`https://api.robinhood.com/quotes/${symbol.toUpperCase()}/`)
         .then(res => res.json())
         .then(eachStock =>{
-          if(this.state.marqueeData.includes(eachStock.symbol)){
-            console.log("sldjflsj");
-          }
           let newData = {[`${eachStock.symbol}`]:parseFloat(eachStock.last_trade_price)}
           let arr = [...this.state.marqueeData,newData]
           this.setState({
@@ -28,7 +25,6 @@ class StockMarquee extends Component {
 
   updatePrices=()=>{
     setInterval(()=>{
-
     },10000)
   }
 
@@ -37,7 +33,6 @@ class StockMarquee extends Component {
 
     return (
       <div>
-
 
         <marquee></marquee>
       </div>
