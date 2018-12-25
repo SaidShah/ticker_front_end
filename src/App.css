@@ -1,4 +1,22 @@
 
+marquee{
+  background: black;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.up{
+  color: lightgreen;
+}
+
+.down{
+  color: red;
+}
+
 .container-fluid.fluid-padding{
   padding-left: 0px;
+}
+
+.navbar.navbar-inverse.nav-padding{
+  margin-bottom: 0px
 }
