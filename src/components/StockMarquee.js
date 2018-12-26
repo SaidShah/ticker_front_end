@@ -17,33 +17,24 @@ class StockMarquee extends Component {
     })
   }
 
-  updatePrices=()=>{
-        let symbols = this.state.symbols.join(",")
-        fetch(`https://api.robinhood.com/quotes/?symbols=${symbols}`)
-        .then(res =>res.json())
-        .then(stocks => this.setState({
-          marqueeData: stocks.results
-        }))
-
-  }
-
-  displayData=()=>{
-    this.updatePrices()
-    if(this.state.marqueeData.length > 0){
-    let newData= this.state.marqueeData.map(eachStock=>{
-      console.log(eachStock.symbol);
-        return `|   ${eachStock.symbol} $${parseFloat(eachStock.last_trade_price)}    |`
-      })
-      return newData
-    }
-
-  }
-
+componentDidMount(prevProps, prevState) {
+  let symbols = this.state.symbols.join(",")
+  fetch(`https://api.robinhood.com/quotes/?symbols=${symbols}`)
+  .then(res =>res.json())
+  .then(stocks => this.setState({
+    marqueeData: stocks.results
+  }))
+}
 
   render() {
+        let data = this.state.marqueeData.map(eachStock =>{
+          let color = Math.floor(Math.random()*10)>=5 ? "up" : "down"
+          let price = parseFloat(eachStock.last_trade_price).toFixed(2)
+          return <span className={color} key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
+        })
     return (
       <div>
-        <marquee className="up"> {this.displayData()} </marquee>
+        <marquee className="up"> {data} </marquee>
       </div>
     );
   }
