@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css'
 import StockMarquee from './StockMarquee'
+import {Link} from 'react-router-dom'
 
 class NavBar extends Component {
 
@@ -10,12 +11,12 @@ class NavBar extends Component {
         <nav className="navbar navbar-inverse nav-padding">
         <div className="container-fluid fluid-padding">
           <div className="navbar-header">
-            <a href="http://www.google.com" className="navbar-left logo-size"><img src={require(".././images/ticker_logo.png")} width="70px" height="50px"/></a>
+            <img src={require(".././images/ticker_logo.png")} width="70px" height="50px" alt=""/>
           </div>
           <ul className="nav navbar-nav">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Marketplace</a></li>
-            <li><a href="#">About</a></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/marketplace">Marketplace</Link></li>
+            <li><Link to="/stockdata">Stock Data</Link></li>
             <li>
               <form className="navbar-form navbar-left" role="search">
                 <div className="form-group">
@@ -25,8 +26,8 @@ class NavBar extends Component {
             </li>
           </ul>
           <ul className="nav navbar-nav navbar-right">
-            <li><a href="#"><span className="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#"><span className="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><Link to="/signup"><span className="glyphicon glyphicon-user"></span> Sign Up</Link></li>
+            <li><Link to="/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link></li>
           </ul>
         </div>
         <StockMarquee/>

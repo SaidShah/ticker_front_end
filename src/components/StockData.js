@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import Jumbotron from './Jumbotron'
 
-class Home extends Component {
+class StockData extends Component {
 
   render() {
     return (
       <div>
-        <Jumbotron/>
+        <h1>THis is stock data</h1>
       </div>
     );
   }
 
 }
-export default Home;
+
+export default StockData;
