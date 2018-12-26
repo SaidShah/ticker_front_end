@@ -13,7 +13,6 @@ class NavBar extends Component {
             <a href="http://www.google.com" className="navbar-left logo-size"><img src={require(".././images/ticker_logo.png")} width="70px" height="50px"/></a>
           </div>
           <ul className="nav navbar-nav">
-            <li className="active"><a href="#">Home</a></li>
             <li><a href="#">Home</a></li>
             <li><a href="#">Marketplace</a></li>
             <li><a href="#">About</a></li>

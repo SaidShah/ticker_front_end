@@ -1,40 +1,49 @@
 import React, { Component } from 'react';
+import '../App.css'
 
 class StockMarquee extends Component {
 
   state={
-    symbols:["GOOG","TSLA","MSFT","AAPL","AMZN","EBAY"],
+    symbols:["GOOG","TSLA","MSFT","AAPL","AMZN","EBAY","NKE","PFE","BAC","NOK","INTC","C","GE","FOX","T","WFC",
+              "RAD","VZ","ORCL","MS","TWTR","BABA","XOM","KO","MRK","ABX","GM","INFY","HES","DIS","GG","MET","HAL","WMT",
+              "CVX","BB","X","BX","DAL","MGM","AIG","JCI","HPE","ATUS","WPX","CVS"],
     marqueeData: [],
-    firstRender: true
+    isReloaded: true
   }
 
-  componentDidMount() {
-    for(let symbol of this.state.symbols){
-        fetch(`https://api.robinhood.com/quotes/${symbol.toUpperCase()}/`)
-        .then(res => res.json())
-        .then(eachStock =>{
-          let newData = {[`${eachStock.symbol}`]:parseFloat(eachStock.last_trade_price)}
-          let arr = [...this.state.marqueeData,newData]
-          this.setState({
-            marqueeData: arr
-          })
-        })
+  fetchDone=(arr)=>{
+    this.setState({
+      marqueeData: arr
+    })
+  }
+
+  updatePrices=()=>{
+        let symbols = this.state.symbols.join(",")
+        fetch(`https://api.robinhood.com/quotes/?symbols=${symbols}`)
+        .then(res =>res.json())
+        .then(stocks => this.setState({
+          marqueeData: stocks.results
+        }))
+
+  }
+
+  displayData=()=>{
+    this.updatePrices()
+    if(this.state.marqueeData.length > 0){
+    let newData= this.state.marqueeData.map(eachStock=>{
+      console.log(eachStock.symbol);
+        return `|   ${eachStock.symbol} $${parseFloat(eachStock.last_trade_price)}    |`
+      })
+      return newData
     }
 
   }
 
-  updatePrices=()=>{
-    setInterval(()=>{
-    },10000)
-  }
-
 
   render() {
-
     return (
       <div>
-
-        <marquee></marquee>
+        <marquee className="up"> {this.displayData()} </marquee>
       </div>
     );
   }
