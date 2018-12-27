@@ -11,10 +11,23 @@ import LoginForm from '../components/LoginForm'
 
 class WholePage extends Component {
 
+
   handleSignUp=(e, user)=>{
+   let newUser = JSON.stringify({user:{first_name:user.first_name,last_name:user.last_name,house_number:user.house_number,street_name: user.street_name, city: user.city,state:user.state,zipcode:user.zipcode,date_of_birth:user.dob,username: user.username,password: user.password,email:user.email}})
+   fetch('http://localhost:3000/users',{method: "POST",
+    headers:{
+      "Content-Type":"application/json",
+      Accepts: "application/json"
+    },
+    body: newUser
+  }).then(resp=>resp.json())
+  .then(user => {
+    localStorage.setItem("token",user.jwt)
+    this.setState({
+      user: user
+    })
+  }).then(err =>{alert("Error signing up")})
 
-
-    
   }
 
   render() {
