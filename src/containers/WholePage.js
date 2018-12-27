@@ -49,14 +49,20 @@ class WholePage extends Component {
   this.props.history.push("/")
   }
 
-  handleLogout=()=>{
+  handleLogout=(e)=>{
+    console.log(e);
+    e.preventDefault()
+    localStorage.removeItem("token")
+    this.setState({
+      user: null
+    })
     this.props.history.push("/")
   }
 
   render() {
     return (
       <div>
-        <NavBar givenUser={this.props}/>
+        <NavBar givenUser={this.props} currentUser={this.state.user} handleLogout={this.handleLogout}/>
         <Switch>
         <Route path="/stockdata" component={StockDataContainer}/>
           <Route path="/marketplace" component={MarketplaceContainer}/>

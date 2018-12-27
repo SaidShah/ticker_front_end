@@ -5,9 +5,10 @@ import {Link} from 'react-router-dom'
 
 class NavBar extends Component {
 
-  handleClick=()=>{
-    localStorage.removeItem("token")
-  }
+  // handle=()=>{
+  //   localStorage.removeItem("token")
+  //
+  // }
 
   render() {
     return (
@@ -21,6 +22,8 @@ class NavBar extends Component {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/marketplace">Marketplace</Link></li>
             <li><Link to="/stockdata">Stock Data</Link></li>
+            {console.log(this.props.currentUser)}
+            {this.props.currentUser !== null ? <li><Link to="/profile">Profile</Link></li>: null}
             <li>
               <form className="navbar-form navbar-left" role="search">
                 <div className="form-group">
@@ -31,7 +34,7 @@ class NavBar extends Component {
           </ul>
 
           <ul className="nav navbar-nav navbar-right">
-          {localStorage.length < 1 || localStorage.token === "undefined" ?
+          {localStorage.length < 1 || localStorage.token === "undefined" || this.props.currentUser === null ?
             <>
              {localStorage.removeItem("token")}
              <li><Link to="/signup"><span className="glyphicon glyphicon-user"></span> Sign Up</Link></li>
@@ -39,7 +42,7 @@ class NavBar extends Component {
             </>
              :
             <>
-             <li><Link to="/" onClick={this.handleClick}><span className="glyphicon glyphicon-log-out"></span> Log out </Link></li>
+             <li><Link to="/" onClick={(e)=>this.props.handleLogout(e)}><span className="glyphicon glyphicon-log-out"></span> Log out </Link></li>
             </>
           }
             </ul>
