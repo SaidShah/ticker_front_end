@@ -12,6 +12,8 @@ import LoginForm from '../components/LoginForm'
 class WholePage extends Component {
 
   handleSignUp=(e, user)=>{
+
+
     
   }
 
