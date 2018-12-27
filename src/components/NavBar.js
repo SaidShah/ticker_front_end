@@ -31,8 +31,9 @@ class NavBar extends Component {
           </ul>
 
           <ul className="nav navbar-nav navbar-right">
-          {localStorage.length < 1 ?
+          {localStorage.length < 1 || localStorage.token === "undefined" ?
             <>
+             {localStorage.removeItem("token")}
              <li><Link to="/signup"><span className="glyphicon glyphicon-user"></span> Sign Up</Link></li>
              <li><Link to="/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link></li>
             </>

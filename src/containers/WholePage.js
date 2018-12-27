@@ -11,7 +11,7 @@ import LoginForm from '../components/LoginForm'
 
 class WholePage extends Component {
   state={
-    user: ""
+    user: null
   }
 
   handleSignUp=(e, user)=>{
@@ -33,7 +33,19 @@ class WholePage extends Component {
   }
 
   handleLoginSubmit = (e, user) =>{
-
+    let logIn = JSON.stringify({login:{username: user.username, password: user.password}})
+    fetch("http://localhost:3000/login",{method: "POST",
+    headers:{
+      "Content-Type":"application/json",
+      Accepts:"application/json"
+    },body:logIn
+  }).then(resp => resp.json())
+    .then(user =>{
+      localStorage.setItem("token",user.jwt)
+      this.setState({
+        user: user.user
+      })
+    })
   this.props.history.push("/")
   }
 
