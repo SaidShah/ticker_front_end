@@ -36,6 +36,9 @@ marquee{
   color: red;
 }
 
+.same{
+  color: yellow;
+}
 .container-fluid.fluid-padding{
   padding-left: 0px;
 }

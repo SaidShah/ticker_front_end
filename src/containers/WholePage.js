@@ -11,6 +11,10 @@ import LoginForm from '../components/LoginForm'
 
 class WholePage extends Component {
 
+  handleSignUp=(e, user)=>{
+    
+  }
+
   render() {
     return (
       <div>
@@ -18,7 +22,7 @@ class WholePage extends Component {
         <Switch>
         <Route path="/stockdata" component={StockDataContainer}/>
           <Route path="/marketplace" component={MarketplaceContainer}/>
-          <Route path="/signup" render={()=><SignupForm/>}/>
+          <Route path="/signup" render={()=><SignupForm handleSignUp={this.handleSignUp}/>}/>
           <Route path="/login" render={()=><LoginForm/>}/>
           <Route path="/" component={HomeContainer}/>
 

@@ -8,13 +8,8 @@ class StockMarquee extends Component {
               "RAD","VZ","ORCL","MS","TWTR","BABA","XOM","KO","MRK","ABX","GM","INFY","HES","DIS","GG","MET","HAL","WMT",
               "CVX","BB","X","BX","DAL","MGM","AIG","JCI","HPE","ATUS","WPX","CVS"],
     marqueeData: [],
+    newData: [],
     isReloaded: true
-  }
-
-  fetchDone=(arr)=>{
-    this.setState({
-      marqueeData: arr
-    })
   }
 
 componentDidMount(prevProps, prevState) {
@@ -24,17 +19,54 @@ componentDidMount(prevProps, prevState) {
   .then(stocks => this.setState({
     marqueeData: stocks.results
   }))
+  setInterval(()=>{
+  fetch(`https://api.robinhood.com/quotes/?symbols=${symbols}`)
+  .then(res =>res.json())
+  .then(stocks => this.setState({
+    newData: stocks.results
+  }))},15000)
+
+}
+
+
+getData = () =>{
+  if(this.state.newData.length > 1 && this.state.marqueeData.length > 1){
+    let data = this.state.marqueeData.map(eachStock =>{
+      let price = parseFloat(eachStock.last_trade_price).toFixed(2)
+      let index = this.state.marqueeData.indexOf(eachStock)
+      if(this.state.marqueeData[index].last_trade_price > this.state.newData[index].last_trade_price){
+        return <span className="down" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
+      }else if(this.state.marqueeData[index].last_trade_price == this.state.newData[index].last_trade_price){
+        return <span className="same" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
+      }else if(this.state.marqueeData[index].last_trade_price < this.state.newData[index].last_trade_price){
+        return <span className="up" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
+      }
+    })
+  return data
+}else if(this.state.marqueeData.length>0){
+  console.log("marquee data", this.state.marqueeData);
+  let data = this.state.marqueeData.map(eachStock =>{
+    let price = parseFloat(eachStock.last_trade_price).toFixed(2)
+    let index = this.state.marqueeData.indexOf(eachStock)
+    if(this.state.marqueeData[index].last_trade_price > eachStock.last_trade_price){
+      return <span className="down" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
+    }else if(this.state.marqueeData[index].last_trade_price == eachStock.last_trade_price){
+      return <span className="same" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
+    }else if(this.state.marqueeData[index].last_trade_price < eachStock.last_trade_price){
+      return <span className="up" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
+    }
+  })
+  return data
+}else{
+  return <h1>Loading...</h1>
+}
 }
 
   render() {
-        let data = this.state.marqueeData.map(eachStock =>{
-          let color = Math.floor(Math.random()*10)>=5 ? "up" : "down"
-          let price = parseFloat(eachStock.last_trade_price).toFixed(2)
-          return <span className={color} key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
-        })
+
     return (
       <div>
-        <marquee className="up"> {data} </marquee>
+        <marquee className="up"> {this.getData()} </marquee>
       </div>
     );
   }
