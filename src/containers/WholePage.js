@@ -26,7 +26,7 @@ class WholePage extends Component {
     this.setState({
       user: user
     })
-  }).then(err =>{alert("Error signing up")})
+  })
 
   }
 
@@ -40,7 +40,6 @@ class WholePage extends Component {
           <Route path="/signup" render={()=><SignupForm handleSignUp={this.handleSignUp}/>}/>
           <Route path="/login" render={()=><LoginForm/>}/>
           <Route path="/" component={HomeContainer}/>
-
         </Switch>
       </div>
     )
