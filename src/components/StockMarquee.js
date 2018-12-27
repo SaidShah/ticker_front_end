@@ -31,7 +31,7 @@ componentDidMount(prevProps, prevState) {
   .then(res =>res.json())
   .then(stocks => this.setState({
     marqueeData: stocks.results
-  }))},12000)
+  }))},9000)
 
 }
 
