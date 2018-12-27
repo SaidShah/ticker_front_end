@@ -25,10 +25,20 @@ class NavBar extends Component {
               </form>
             </li>
           </ul>
+
           <ul className="nav navbar-nav navbar-right">
-            <li><Link to="/signup"><span className="glyphicon glyphicon-user"></span> Sign Up</Link></li>
-            <li><Link to="/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link></li>
-          </ul>
+          {localStorage.length < 1 ?
+            <>
+             <li><Link to="/signup"><span className="glyphicon glyphicon-user"></span> Sign Up</Link></li>
+             <li><Link to="/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link></li>
+            </>
+             :
+            <>
+             <li><Link to="/login"><span className="glyphicon glyphicon-log-out"></span> Log out </Link></li>
+            </>
+          }
+            </ul>
+
         </div>
         <StockMarquee/>
         </nav>

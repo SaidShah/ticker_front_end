@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WholePage from './containers/WholePage'
+import {withRouter} from 'react-router-dom'
 
 class App extends Component {
   render() {
@@ -13,4 +14,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

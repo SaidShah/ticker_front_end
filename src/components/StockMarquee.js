@@ -44,7 +44,7 @@ getData = () =>{
       let index = this.state.newData.indexOf(eachStock)
       if(this.state.marqueeData[index].last_trade_price > this.state.newData[index].last_trade_price){
         return <span className="down" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
-      }else if(this.state.marqueeData[index].last_trade_price == this.state.newData[index].last_trade_price){
+      }else if(this.state.marqueeData[index].last_trade_price === this.state.newData[index].last_trade_price){
         return <span className="same" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
       }else if(this.state.marqueeData[index].last_trade_price < this.state.newData[index].last_trade_price){
         return <span className="up" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
@@ -58,7 +58,7 @@ getData = () =>{
     let index = this.state.marqueeData.indexOf(eachStock)
     if(this.state.marqueeData[index].last_trade_price > eachStock.last_trade_price){
       return <span className="down" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
-    }else if(this.state.marqueeData[index].last_trade_price == eachStock.last_trade_price){
+    }else if(this.state.marqueeData[index].last_trade_price === eachStock.last_trade_price){
       return <span className="same" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
     }else if(this.state.marqueeData[index].last_trade_price < eachStock.last_trade_price){
       return <span className="up" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
