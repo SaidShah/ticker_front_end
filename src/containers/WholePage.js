@@ -6,6 +6,7 @@ import HomeContainer from '../containers/HomeContainer'
 import MarketplaceContainer from '../containers/MarketplaceContainer'
 import StockDataContainer from '../containers/StockDataContainer'
 import SignupForm from '../components/SignupForm'
+import LoginForm from '../components/LoginForm'
 
 
 class WholePage extends Component {
@@ -17,7 +18,8 @@ class WholePage extends Component {
         <Switch>
         <Route path="/stockdata" component={StockDataContainer}/>
           <Route path="/marketplace" component={MarketplaceContainer}/>
-          <Route path="/signup" components={SignupForm}/>
+          <Route path="/signup" render={()=><SignupForm/>}/>
+          <Route path="/login" render={()=><LoginForm/>}/>
           <Route path="/" component={HomeContainer}/>
 
         </Switch>
