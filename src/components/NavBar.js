@@ -5,6 +5,10 @@ import {Link} from 'react-router-dom'
 
 class NavBar extends Component {
 
+  handleClick=()=>{
+    localStorage.removeItem("token")
+  }
+
   render() {
     return (
       <div>
@@ -34,7 +38,7 @@ class NavBar extends Component {
             </>
              :
             <>
-             <li><Link to="/login"><span className="glyphicon glyphicon-log-out"></span> Log out </Link></li>
+             <li><Link to="/" onClick={this.handleClick}><span className="glyphicon glyphicon-log-out"></span> Log out </Link></li>
             </>
           }
             </ul>

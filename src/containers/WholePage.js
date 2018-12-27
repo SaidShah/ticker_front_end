@@ -32,6 +32,15 @@ class WholePage extends Component {
   this.props.history.push("/")
   }
 
+  handleLoginSubmit = (e, user) =>{
+
+  this.props.history.push("/")
+  }
+
+  handleLogout=()=>{
+    this.props.history.push("/")
+  }
+
   render() {
     return (
       <div>
@@ -40,7 +49,7 @@ class WholePage extends Component {
         <Route path="/stockdata" component={StockDataContainer}/>
           <Route path="/marketplace" component={MarketplaceContainer}/>
           <Route path="/signup" render={()=><SignupForm handleSignUp={this.handleSignUp}/>}/>
-          <Route path="/login" render={()=><LoginForm/>}/>
+          <Route path="/login" render={()=><LoginForm handleLoginSubmit={this.handleLoginSubmit}/>}/>
           <Route path="/" render={()=><HomeContainer/>}/>
         </Switch>
       </div>
