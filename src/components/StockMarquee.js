@@ -24,7 +24,7 @@ componentDidMount(prevProps, prevState) {
   .then(res =>res.json())
   .then(stocks => this.setState({
     newData: stocks.results
-  }))},10000)
+  }))},15000)
 
   setInterval(()=>{
   fetch(`https://api.robinhood.com/quotes/?symbols=${symbols}`)
@@ -42,12 +42,14 @@ getData = () =>{
     let data = this.state.newData.map(eachStock =>{
       let price = parseFloat(eachStock.last_trade_price).toFixed(2)
       let index = this.state.newData.indexOf(eachStock)
-      if(this.state.marqueeData[index].last_trade_price > this.state.newData[index].last_trade_price){
+      let marqueeDataPrice = parseFloat(this.state.marqueeData[index].adjusted_previous_close).toFixed(2)
+      let newDataPrice = parseFloat(this.state.newData[index].last_trade_price).toFixed(2)
+      if(marqueeDataPrice > newDataPrice){
         return <span className="down" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
-      }else if(this.state.marqueeData[index].last_trade_price === this.state.newData[index].last_trade_price){
-        return <span className="same" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
-      }else if(this.state.marqueeData[index].last_trade_price < this.state.newData[index].last_trade_price){
+      }else if(marqueeDataPrice < newDataPrice){
         return <span className="up" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
+      }else {
+        return <span className="same" key={eachStock.symbol}> | {eachStock.symbol} {price} | </span>
       }
     })
 

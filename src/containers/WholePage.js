@@ -7,6 +7,7 @@ import MarketplaceContainer from '../containers/MarketplaceContainer'
 import StockDataContainer from '../containers/StockDataContainer'
 import SignupForm from '../components/SignupForm'
 import LoginForm from '../components/LoginForm'
+import Footer from '../components/Footer'
 
 
 class WholePage extends Component {
@@ -87,6 +88,7 @@ class WholePage extends Component {
           <Route path="/login" render={()=><LoginForm handleLoginSubmit={this.handleLoginSubmit}/>}/>
           <Route path="/" render={()=><HomeContainer/>}/>
         </Switch>
+        <Footer/>
       </div>
     )
   }
