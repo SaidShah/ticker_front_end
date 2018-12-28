@@ -22,8 +22,7 @@ class NavBar extends Component {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/marketplace">Marketplace</Link></li>
             <li><Link to="/stockdata">Stock Data</Link></li>
-            {console.log(this.props.currentUser)}
-            {this.props.currentUser !== null ? <li><Link to="/profile">Profile</Link></li>: null}
+            {this.props.currentUser !== null ? <><li><Link to="/profile">Profile</Link></li><li><Link to="/account">Account</Link></li></>: null}
             <li>
               <form className="navbar-form navbar-left" role="search">
                 <div className="form-group">
@@ -36,7 +35,6 @@ class NavBar extends Component {
           <ul className="nav navbar-nav navbar-right">
           {localStorage.length < 1 || localStorage.token === "undefined" || this.props.currentUser === null ?
             <>
-             {localStorage.removeItem("token")}
              <li><Link to="/signup"><span className="glyphicon glyphicon-user"></span> Sign Up</Link></li>
              <li><Link to="/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link></li>
             </>

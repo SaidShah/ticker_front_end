@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {Route, Switch, withRouter} from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import '../App.css'
@@ -32,20 +32,37 @@ class WholePage extends Component {
   this.props.history.push("/")
   }
 
+  componentDidMount() {
+    let token = localStorage.getItem("token")
+    if(token){
+      fetch("http://localhost:3000/current_user",{method: "GET",
+      headers: {
+      "Content-Type":"application/json",
+      Action: "application/json",
+      Authorization:`${token}`
+    }
+  }).then(res => res.json())
+  .then(res => this.setState({user:res.user}))
+  }
+  }
+
   handleLoginSubmit = (e, user) =>{
-    let logIn = JSON.stringify({login:{username: user.username, password: user.password}})
+    console.log(user.username, user.password)
     fetch("http://localhost:3000/login",{method: "POST",
     headers:{
       "Content-Type":"application/json",
       Accepts:"application/json"
-    },body:logIn
+    },body:JSON.stringify({user:{username: user.username, password: user.password}})
   }).then(resp => resp.json())
     .then(user =>{
       localStorage.setItem("token",user.jwt)
+
       this.setState({
         user: user.user
       })
     })
+
+
   this.props.history.push("/")
   }
 
