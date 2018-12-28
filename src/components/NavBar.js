@@ -5,30 +5,22 @@ import {Link} from 'react-router-dom'
 
 class NavBar extends Component {
 
-  // handle=()=>{
-  //   localStorage.removeItem("token")
-  //
-  // }
 
   render() {
     return (
       <div>
         <nav className="navbar navbar-inverse nav-padding">
         <div className="container-fluid fluid-padding">
-          <div className="navbar-header">
+          <div className="navbar-header set-height-navBar">
             <img src={require(".././images/ticker_logo.png")} width="70px" height="50px" alt=""/>
           </div>
           <ul className="nav navbar-nav">
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/marketplace">Marketplace</Link></li>
-            <li><Link to="/stockdata">Stock Data</Link></li>
-            {this.props.currentUser !== null ? <><li><Link to="/profile">Profile</Link></li><li><Link to="/account">Account</Link></li></>: null}
+             <li><Link to="/marketplace">Marketplace</Link></li>
+            {this.props.currentUser !== null ? <>
+              <li><Link to="/stockdata">Buy / Sell</Link></li><li><Link to="/profile">Profile</Link></li><li><Link to="/account">Account</Link></li></>: null}
             <li>
-              <form className="navbar-form navbar-left" role="search">
-                <div className="form-group">
-                    <input type="text" className="form-control" placeholder="Search symbol...."/>
-                </div>
-              </form>
+
             </li>
           </ul>
 
@@ -46,8 +38,8 @@ class NavBar extends Component {
             </ul>
 
         </div>
-        <StockMarquee/>
         </nav>
+        <StockMarquee/>
       </div>
     );
   }
