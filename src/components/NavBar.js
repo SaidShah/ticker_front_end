@@ -6,7 +6,6 @@ import {Link, Route, Switch} from 'react-router-dom'
 
 class NavBar extends Component {
 
-
   render() {
     return (
       <div>
@@ -18,7 +17,7 @@ class NavBar extends Component {
           <ul className="nav navbar-nav">
             <li><Link to="/">Home</Link></li>
              <li><Link to="/marketplace">Marketplace</Link></li>
-            {this.props.currentUser !== null ? <>
+            {this.props.currentUser !== null && this.props.currentUser !== undefined? <>
               <li><Link to="/stockdata">Buy / Sell</Link></li><li><Link to="/profile">Profile</Link></li><li><Link to="/account">Account</Link></li></>: null}
             <li>
 
@@ -26,14 +25,14 @@ class NavBar extends Component {
           </ul>
 
           <ul className="nav navbar-nav navbar-right">
-          {localStorage.length < 1 || localStorage.token === "undefined" || this.props.currentUser === null ?
+          {localStorage.length < 1 || localStorage.token === "undefined" || this.props.currentUser === null || this.props.currentUser === undefined?
             <>
              <li><Link to="/signup"><span className="glyphicon glyphicon-user"></span> Sign Up</Link></li>
              <li><Link to="/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link></li>
             </>
              :
             <>
-            <li className="user-funds">Current Balance: $ </li>
+            <li className="user-funds">Current Balance: $ {this.props.currentUser.account.total_funds}</li>
              <li><Link to="/" onClick={(e)=>this.props.handleLogout(e)}><span className="glyphicon glyphicon-log-out"></span> Log out </Link></li>
             </>
           }
