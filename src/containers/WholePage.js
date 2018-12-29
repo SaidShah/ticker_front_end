@@ -86,7 +86,7 @@ class WholePage extends Component {
           <Route path="/marketplace" render={()=><MarketplaceContainer/>}/>
           <Route path="/signup" render={()=><SignupForm handleSignUp={this.handleSignUp}/>}/>
           <Route path="/login" render={()=><LoginForm handleLoginSubmit={this.handleLoginSubmit}/>}/>
-          <Route path="/" render={()=><HomeContainer/>}/>
+          <Route exact path="/" render={()=><HomeContainer/>}/>
         </Switch>
         <Footer/>
       </div>

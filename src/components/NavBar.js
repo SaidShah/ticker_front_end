@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import '../App.css'
 import StockMarquee from './StockMarquee'
-import {Link} from 'react-router-dom'
+import Account from './Account'
+import {Link, Route, Switch} from 'react-router-dom'
 
 class NavBar extends Component {
 
@@ -32,6 +33,7 @@ class NavBar extends Component {
             </>
              :
             <>
+            <li className="user-funds">Current Balance: $ </li>
              <li><Link to="/" onClick={(e)=>this.props.handleLogout(e)}><span className="glyphicon glyphicon-log-out"></span> Log out </Link></li>
             </>
           }
@@ -40,6 +42,9 @@ class NavBar extends Component {
         </div>
         </nav>
         <StockMarquee/>
+        <Switch>
+          <Route path="/account" render={()=><Account user={this.props.currentUser}/>}/>
+        </Switch>
       </div>
     );
   }

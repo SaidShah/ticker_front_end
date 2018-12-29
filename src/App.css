@@ -26,6 +26,12 @@ h6.footer-text{
   width: 80%;
 }
 
+.user-funds{
+  color: green;
+  font-size: 24px;
+  padding: 5px;
+}
+
 .purple-text{
   color:  #bf80ff;
 }
