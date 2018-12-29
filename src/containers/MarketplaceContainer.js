@@ -88,7 +88,8 @@ class MarketplaceContainer extends Component {
   render() {
     let stockArr = this.state.stocksToShow.map(eachStock => {
       return (
-        <div className="card cardBoarder" key={eachStock.symbol}>
+        <div className="center-text"  key={eachStock.symbol}>
+        <div className="card cardBoarder">
           <div className="card-header card-title center-text">
             Symbol:&nbsp;&nbsp; {eachStock.symbol}
           </div>
@@ -115,13 +116,13 @@ class MarketplaceContainer extends Component {
               {parseFloat(eachStock.last_extended_hours_trade_price).toFixed(2)}
             </p>
             <Link
-              to={`/marketplacecontainer/${eachStock.symbol}`}
-              className="btn btn-primary cardBoarder cardBtn"
-            >
+              to={`/marketplace/${eachStock.symbol}`}
+              className="btn btn-primary cardBoarder cardBtn">
               view {eachStock.symbol}
             </Link>
           </div>
         </div>
+      </div>
       );
     });
 
@@ -129,8 +130,8 @@ class MarketplaceContainer extends Component {
         <>
 
         <Switch>
-          <Route exact path="/marketplacecontainer/:symbol" render={(props)=><EachStock stockData={props.match.params.symbol}/>}/>
-          <Route exact path="/marketplacecontainer" render={()=><div>{stockArr}</div>}/>
+          <Route exact path="/marketplace/:symbol" render={(props)=><EachStock stockData={props.match.params.symbol}/>}/>
+          <Route exact path="/marketplace" render={()=><div>{stockArr}</div>}/>
         </Switch>
         </>
     );

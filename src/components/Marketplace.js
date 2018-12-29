@@ -27,7 +27,7 @@ class Marketplace extends Component {
 
 
     <Switch>
-      <Route path="/marketplace/:symbol" render={(props)=><EachStock stock={this.props.stock}/>}/>
+      <Route path="/marketplace/:symbol" render={(props)=><EachStock stock={this.props.stock} stockData={this.props}/>}/>
     </Switch>
       </>
     );

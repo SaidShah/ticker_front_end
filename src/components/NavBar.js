@@ -16,7 +16,7 @@ class NavBar extends Component {
           </div>
           <ul className="nav navbar-nav">
             <li><Link to="/">Home</Link></li>
-             <li><Link to="/marketplacecontainer">Marketplace</Link></li>
+             <li><Link to="/marketplace">Marketplace</Link></li>
             {this.props.currentUser !== null ? <>
               <li><Link to="/stockdata">Buy / Sell</Link></li><li><Link to="/profile">Profile</Link></li><li><Link to="/account">Account</Link></li></>: null}
             <li>

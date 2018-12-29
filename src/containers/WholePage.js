@@ -83,7 +83,7 @@ class WholePage extends Component {
         <NavBar givenUser={this.props} currentUser={this.state.user} handleLogout={this.handleLogout}/>
         <Switch>
         <Route path="/stockdata" component={StockDataContainer}/>
-          <Route path="/marketplacecontainer" render={()=><MarketplaceContainer/>}/>
+          <Route path="/marketplace" render={()=><MarketplaceContainer/>}/>
           <Route path="/signup" render={()=><SignupForm handleSignUp={this.handleSignUp}/>}/>
           <Route path="/login" render={()=><LoginForm handleLoginSubmit={this.handleLoginSubmit}/>}/>
           <Route path="/" render={()=><HomeContainer/>}/>

@@ -22,6 +22,20 @@ h6.footer-text{
   display: inline-block;
 }
 
+.show-card-width{
+  width: 80%;
+}
+
+.purple-text{
+  color:  #bf80ff;
+}
+
+.orange-text{
+  color: orange;
+}
+
+
+
 .box-header-text{
   text-shadow: 1px 1px 15px #72c02c;
   color: black;
