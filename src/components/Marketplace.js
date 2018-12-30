@@ -14,7 +14,8 @@ class Marketplace extends Component{
 
   sellStocks=(e,stock, quantity)=>{
     e.preventDefault()
-    this.props.sellStocks(e,stock, quantity.totalStocks)
+    let user_id = this.props.user.person.id
+    this.props.sellStocks(e,stock, quantity.totalStocks, user_id)
     this.setState({
       totalStocks: '', clicked: !this.state.clicked
     })

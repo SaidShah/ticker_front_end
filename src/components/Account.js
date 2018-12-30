@@ -33,11 +33,11 @@ class Account extends Component {
 
   }
 
-  sellStocks=(e,stock, quantity)=>{
+  sellStocks=(e,stock, quantity, user_id)=>{
     e.preventDefault()
-    this.setState({
-      changed: !this.state.changed
-    })
+
+
+
   }
 
   getStocks=()=>{
@@ -45,7 +45,7 @@ class Account extends Component {
       return <h3>You currently do not own any stocks</h3>
     }else{
       let arr = this.state.user.stocks.map(a =>{
-        return <Marketplace stock={a} key={a.symbol} sellStocks={this.sellStocks}/>
+        return <Marketplace stock={a} key={a.symbol} sellStocks={this.sellStocks} user={this.state.user}/>
       })
       return arr
     }
