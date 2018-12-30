@@ -23,7 +23,7 @@ class SignupForm extends Component {
   }
 
   handleSubmit = (e,user)=>{
-    e.preventDefault()
+     e.preventDefault()
     this.props.handleSignUp(e,user)
     this.setState({
       username: '',
