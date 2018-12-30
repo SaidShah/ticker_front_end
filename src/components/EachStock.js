@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Switch, withRouter, Link } from "react-router-dom";
 
 class EachStock extends Component {
+
   state = {
     currentStock: this.props.stockData,
     stockNews: "",

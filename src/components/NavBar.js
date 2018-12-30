@@ -2,11 +2,21 @@ import React, { Component } from 'react';
 import '../App.css'
 import StockMarquee from './StockMarquee'
 import Account from './Account'
-import {Link, Route, Switch} from 'react-router-dom'
+import {Link, Route, Switch, withRouter, Redirect} from 'react-router-dom'
 
 class NavBar extends Component {
 
+  state={
+    didRefresh: true
+  }
+
+  componentDidMount() {
+    this.setState({didRefresh: !this.state.didRefresh})
+  }
+
+
   render() {
+
     return (
       <div>
         <nav className="navbar navbar-inverse nav-padding">
@@ -17,8 +27,11 @@ class NavBar extends Component {
           <ul className="nav navbar-nav">
             <li><Link to="/">Home</Link></li>
              <li><Link to="/marketplace">Marketplace</Link></li>
-            {this.props.currentUser !== null && this.props.currentUser !== undefined? <>
-              <li><Link to="/stockdata">Buy / Sell</Link></li><li><Link to="/profile">Profile</Link></li><li><Link to="/account">Account</Link></li></>: null}
+            {this.props.currentUser !== null && this.props.currentUser !== undefined ? <>
+
+              <li><Link to="/stockdata">Buy / Sell</Link></li><li><Link to="/profile">Profile</Link></li><li><Link to="/account">Account</Link></li></> : null
+
+              }
             <li>
 
             </li>
@@ -41,13 +54,12 @@ class NavBar extends Component {
         </div>
         </nav>
         <StockMarquee/>
-        <Switch>
-          <Route path="/account" render={()=><Account user={this.props.currentUser}/>}/>
-        </Switch>
+
+      <Route path="/account" render={(props)=><Account user={this.props.currentUser} user_history={this.props.givenUser}/>}/>
       </div>
     );
   }
 
 }
 
-export default NavBar;
+export default withRouter(NavBar);

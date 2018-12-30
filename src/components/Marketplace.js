@@ -5,7 +5,6 @@ import "../App.css";
 
 class Marketplace extends Component {
   render() {
-    console.log(this.props);
     return (
       <>
         <div className="card cardBoarder">

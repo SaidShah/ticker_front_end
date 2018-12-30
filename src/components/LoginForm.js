@@ -14,7 +14,7 @@ class LoginForm extends Component {
   }
 
   handleLoginSubmit=(e,user)=>{
-    e.preventDefault()
+
     this.props.handleLoginSubmit(e,user)
     this.setState({
       username: '',
@@ -24,12 +24,12 @@ class LoginForm extends Component {
 
   render() {
     return (
+      <form onSubmit={(e)=>this.handleLoginSubmit(e,this.state)}>
       <div className="container ">
        <div className="col-md-3"></div>
          <div className="col-md-6">
            <div className="row myborder">
                <h4 className="h4-text">Log In</h4><hr/>
-               <form onSubmit={(e)=>this.handleLoginSubmit(e,this.state)}>
               <div className="input-group margin-bottom-20">
                   <span className="input-group-addon"><i className="glyphicon glyphicon-user mycolor"></i></span>
                   <input className="form-control" placeholder="User Name" name="username" type="text" onChange={this.handleChange} value={this.state.username} required/></div><br></br>
@@ -43,11 +43,11 @@ class LoginForm extends Component {
                       <button className="btn-u pull-left" type="submit">Log in</button>
                   </div>
               </div>
-              </form>
           </div>
           <div className="col-md-2"></div>
       </div>
     </div>
+      </form>
     );
   }
 

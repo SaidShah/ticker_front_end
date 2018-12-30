@@ -43,12 +43,20 @@ class WholePage extends Component {
       Authorization:`${token}`
     }
   }).then(res => res.json())
-  .then(res => this.setState({user:res.user}))
+  .then(user => {
+    console.log(user.user, "this is user in component did mount");
+    localStorage.setItem("token",user.jwt)
+    this.setState({
+      user: user.user
+    })
+  })
   }
-  }
+  this.props.history.push("/")
+ }
+
 
   handleLoginSubmit = (e, user) =>{
-    console.log(user.username, user.password)
+      e.preventDefault()
     fetch("http://localhost:3000/login",{method: "POST",
     headers:{
       "Content-Type":"application/json",
@@ -57,18 +65,15 @@ class WholePage extends Component {
   }).then(resp => resp.json())
     .then(user =>{
       localStorage.setItem("token",user.jwt)
-
       this.setState({
         user: user.user
       })
+      console.log(user.user, "this is user on login");
     })
-
-
-  this.props.history.push("/")
+    this.props.history.push("/")
   }
 
   handleLogout=(e)=>{
-    console.log(e);
     e.preventDefault()
     localStorage.removeItem("token")
     this.setState({
