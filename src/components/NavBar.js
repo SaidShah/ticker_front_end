@@ -10,6 +10,10 @@ class NavBar extends Component {
     didRefresh: true
   }
 
+  sellStocks=(e,stock)=>{
+    console.log(stock);
+  }
+
   componentDidMount() {
     this.setState({didRefresh: !this.state.didRefresh})
   }

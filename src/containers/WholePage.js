@@ -44,7 +44,6 @@ class WholePage extends Component {
     }
   }).then(res => res.json())
   .then(user => {
-    console.log(user.user, "this is user in component did mount");
     localStorage.setItem("token",user.jwt)
     this.setState({
       user: user.user
@@ -68,7 +67,6 @@ class WholePage extends Component {
       this.setState({
         user: user.user
       })
-      console.log(user.user, "this is user on login");
     })
     this.props.history.push("/")
   }

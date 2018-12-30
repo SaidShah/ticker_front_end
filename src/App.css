@@ -40,6 +40,11 @@ h6.footer-text{
   color: orange;
 }
 
+button.sell-btn{
+  box-shadow: 1px 1px 50px #72c02c;
+  border: 1px solid green;
+  background-color: black;
+}
 
 
 .box-header-text{
@@ -67,9 +72,22 @@ h6.footer-text{
   padding: 50px;
 }
 
+.current-portfolio{
+  width: 80%;
+}
+
 .card-header.card-title{
   font-weight: bolder;
   font-size: 25px;
+}
+
+.sell-form-padding{
+  padding-top: 10px;
+}
+
+.sell-form-text{
+  font-size: 18px;
+  padding-top: 5px;
 }
 
 .cardBoarder.cardBtn{

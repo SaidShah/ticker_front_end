@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom'
+import Marketplace from './Marketplace'
 
 class Account extends Component {
 
@@ -15,9 +16,18 @@ class Account extends Component {
     }
   }
 
+  sellStocks=(e,stock, quantity)=>{
+    
+  }
+
   getStocks=()=>{
     if(this.props.user.stocks.length === 0){
       return <h3>You currently do not own any stocks</h3>
+    }else{
+      let arr = this.props.user.stocks.map(a =>{
+        return <Marketplace stock={a} key={a.symbol} sellStocks={this.sellStocks}/>
+      })
+      return arr
     }
   }
 
@@ -36,11 +46,11 @@ class Account extends Component {
           <h4 className="card-title">Your current account balance is :&nbsp;&nbsp; $
           {this.props.user !== null ? this.props.user.account.total_funds: this.forceUpdate()}</h4>
           </div>
-          <div class="row">
-            <div class="col-sm-6">
+          <div className="row">
+            <div className="col-sm-6">
             <h2>Find Stocks</h2>
             </div>
-            <div class="col-sm-6" >
+            <div className="col-sm-6" >
               <h2>Your Current Portfolio</h2>
               {this.props.user !== null ? this.getStocks(): this.forceUpdate()}
             </div>

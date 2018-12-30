@@ -1,36 +1,61 @@
 import React, { Component } from "react";
 import {Switch, Route, Link, withRouter} from 'react-router-dom'
-import EachStock from './EachStock'
 import "../App.css";
 
-class Marketplace extends Component {
+
+
+class Marketplace extends Component{
+
+  state={
+    totalStocks: ''
+  }
+
+  sellStocks=(e,stock, quantity)=>{
+    e.preventDefault()
+    this.props.sellStocks(e,stock, quantity.totalStocks)
+    this.setState({
+      totalStocks: ''
+    })
+  }
+
+  handleChange=(e)=>{
+    this.setState({
+      totalStocks: e.target.value
+    })
+  }
+
+
   render() {
-    return (
+    const {stock} = this.props
+
+return(
       <>
-        <div className="card cardBoarder">
-          <div className="card-header card-title center-text">
-            Symbol:&nbsp;&nbsp; {this.props.stock.symbol}
+        <div className="card cardBoarder current-portfolio">
+          <div className="card-header card-title center-text same">
+            Symbol:&nbsp;&nbsp; {stock.symbol}
           </div>
           <div className="card-body">
-            <h4 className="card-title">Current Price:&nbsp;&nbsp; $ {parseFloat(this.props.stock.last_trade_price).toFixed(2)}</h4>
+            <h4 className="card-title">Total Value:&nbsp;&nbsp; $ {parseFloat(stock.total_value).toFixed(2)}</h4>
             <p className="card-text bolden-text">
-              <span> Previous Close:&nbsp;&nbsp; $ {parseFloat(this.props.stock.adjusted_previous_close).toFixed(2)} </span>
-              &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <span> Asking Price:&nbsp;&nbsp; $ {parseFloat(this.props.stock.ask_price).toFixed(2)} </span>
-            </p>
-            <p className="card-text bolden-text">Last extended hours trade price:&nbsp;&nbsp; $ {parseFloat(this.props.stock.last_extended_hours_trade_price).toFixed(2)}</p>
-            <Link to={`/marketplace/${this.props.stock.symbol}`} className="btn btn-primary cardBoarder cardBtn">
-              view {this.props.stock.symbol}
-            </Link>
+              <span> Current Shares:&nbsp;&nbsp; {stock.total_quantity} </span>
+              <br></br>&nbsp;&nbsp;&nbsp; <span> Purchase Price:&nbsp;&nbsp; $ {parseFloat(stock.purchase_price).toFixed(2)} </span>
+              </p>
+              <form className="form-inline sell-form-padding center-card" onSubmit={(e)=>this.sellStocks(e,stock, this.state)}>
+                <div className="form-group form-group-sm">
+                    <label className="col-sm-3 control-label sell-form-text" htmlFor="sell">Quantity:</label>
+                    <div className="col-sm-7">
+                      <input className="form-control" type="number" id="sell" min="0" name="totalStocks" onChange={this.handleChange} value={this.state.totalStocks}/>
+                    </div>
+                    <button type="submit" className="btn btn-primary mb-2 sell-btn">Sell</button>
+                </div>
+              </form>
+
           </div>
         </div>
 
-
-    <Switch>
-      <Route path="/marketplace/:symbol" render={(props)=><EachStock stock={this.props.stock} stockData={this.props}/>}/>
-    </Switch>
       </>
-    );
-  }
-}
 
+  )
+ }
+}
 export default withRouter(Marketplace);
