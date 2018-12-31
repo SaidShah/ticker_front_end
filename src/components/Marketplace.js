@@ -9,13 +9,20 @@ class Marketplace extends Component{
   state={
     totalStocks: '',
     clicked: false,
-    stocks: this.props.stock
+    stocks: this.props.stock,
+    currentPrice: ''
   }
 
-  sellStocks=(e,stock, quantity)=>{
+  sellStocks=(e,stock, quantity, currentPrice)=>{
     e.preventDefault()
-    let user_id = this.props.user.person.id
-    this.props.sellStocks(e,stock, quantity.totalStocks, user_id)
+    let user = this.props.user.person
+    let account = this.props.user.account
+    let price = parseFloat(this.state.currentPrice).toFixed(2)
+    if(parseInt(stock.total_quantity) < parseInt(this.state.totalStocks)){
+      alert("You Dont Have Enough Shares")
+    }else{
+      this.props.sellStocks(e,stock, this.state.totalStocks, user, account, price)
+   }
     this.setState({
       totalStocks: '', clicked: !this.state.clicked
     })
@@ -25,6 +32,17 @@ class Marketplace extends Component{
     this.setState({
       totalStocks: e.target.value
     })
+  }
+
+  getCurrentPrice=(symbol)=>{
+    fetch(`https://api.robinhood.com/quotes/${symbol}/`)
+    .then(res => res.json())
+    .then(stock =>{
+      this.setState({
+        currentPrice: stock.last_trade_price
+      })
+    })
+
   }
 
 
@@ -40,9 +58,10 @@ return(
             <h4 className="card-title">Total Value:&nbsp;&nbsp; $ {parseFloat(this.state.stocks.total_value).toFixed(2)}</h4>
             <p className="card-text bolden-text">
               <span> Current Shares:&nbsp;&nbsp; {this.state.stocks.total_quantity} </span>
-              <br></br>&nbsp;&nbsp;&nbsp; <span> Purchase Price:&nbsp;&nbsp; $ {parseFloat(this.state.stocks.purchase_price).toFixed(2)} </span>
+              <br></br>&nbsp;&nbsp;&nbsp; <span> Purchase Price (per share):&nbsp;&nbsp; $ {parseFloat(this.state.stocks.purchase_price).toFixed(2)} </span>
               </p>
-              <form className="form-inline sell-form-padding center-card" onSubmit={(e)=>this.sellStocks(e,stock, this.state)}>
+            <p className="card-text bolden-text">Current Price (per share): {this.getCurrentPrice(this.state.stocks.symbol)}$ {parseFloat(this.state.currentPrice).toFixed(2)}</p>
+              <form className="form-inline sell-form-padding center-card" onSubmit={(e)=>this.sellStocks(e,stock, this.state, this.state.currentPrice)}>
                 <div className="form-group form-group-sm">
                     <label className="col-sm-3 control-label sell-form-text" htmlFor="sell">Quantity:</label>
                     <div className="col-sm-7">

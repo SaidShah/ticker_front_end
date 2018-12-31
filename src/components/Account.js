@@ -7,7 +7,8 @@ class Account extends Component {
   state={
   isChanged: false,
   name: '',
-  user: null
+  user: null,
+  stocks: ''
   }
 
 
@@ -30,13 +31,27 @@ class Account extends Component {
        })
      })
      }
+     
 
   }
 
-  sellStocks=(e,stock, quantity, user_id)=>{
+  sellStocks=(e,stock, quantitySelling, user, account, currentPrice)=>{
     e.preventDefault()
+    let stockPrice = parseFloat(currentPrice)
+    let symbol = stock.symbol
+    let totalValue = quantitySelling * stockPrice// the total price of sold stocks
+    let newStockCount = stock.total_quantity - quantitySelling// num of shares left after selling some
+    let newAccountBalance = totalValue + parseFloat(account.total_funds)
+    let newValueForStock = totalValue
+    let data = JSON.stringify({values:{total_value: totalValue, new_stock_count: newStockCount, new_account_balance: newAccountBalance, new_value_for_stock: newValueForStock,stock_id: stock.id, user_id: user.id}})
+    fetch(`http://localhost:3000/users/${user.id}/stocks/${stock.id}`, {method: "PATCH",
+    headers: {"Content-Type": "application/json", Accept: "application/json"},
+    body: data
+  }).then(res => res.json())
+  .then(user =>{
+    this.setState({isChanged: !this.state.isChanged, user: user, stocks: user.stocks})
 
-
+  })
 
   }
 
@@ -53,6 +68,7 @@ class Account extends Component {
   }
 
   render() {
+
     return (
       <>
       <div className="center-card">
