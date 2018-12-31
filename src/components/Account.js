@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom'
 import Marketplace from './Marketplace'
+import StockSearchCard from './StockSearchCard'
 
 class Account extends Component {
 
@@ -10,7 +11,7 @@ class Account extends Component {
   user: null,
   stocks: '',
   search: ' ',
-  found: []
+  found: ''
   }
 
   componentDidMount() {
@@ -52,7 +53,6 @@ class Account extends Component {
   }
   handleChange=(e)=>{
     this.setState({search: e.target.value})
-
   }
 
   handleSubmit=(e,term)=>{
@@ -60,6 +60,11 @@ class Account extends Component {
     fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${term}&apikey=`)
     .then(res => res.json())
     .then(stocks => this.setState({found: stocks}))
+
+  }
+
+  handleBuy=(e,stock, quantity)=>{
+
   }
 
   getStocks=()=>{
@@ -73,14 +78,6 @@ class Account extends Component {
     }
   }
 
-  displayStocks=()=>{
-    if(this.state.found.length > 1){
-        let newStocks = this.state.found.map(eachStock =>{
-          console.log(eachStock);
-      })
-    }
-
-  }
 
   render() {
 
@@ -92,8 +89,8 @@ class Account extends Component {
           Welcome&nbsp; {this.state.user == null ? null : this.state.user.person["first_name"]}
         </div>
         <div className="card-body">
-          <h4 className="card-title">Your current account balance is :&nbsp;&nbsp; $
-           {this.state.user == null ? null : this.state.user.account["total_funds"]}
+          <h4 className="card-title">Your current account balance is :&nbsp;&nbsp; $&nbsp;
+           {this.state.user == null ? null : parseFloat(this.state.user.account["total_funds"]).toFixed(2)}
           </h4>
           </div>
           <div className="row">
@@ -103,7 +100,7 @@ class Account extends Component {
               <input className="form-control" type="text" id="search" min="0" name="search" placeholder="enter symbol...." onChange={this.handleChange} value={this.state.search}/>
               <button type="submit" className="btn btn-primary mb-2 sell-btn search-padding">Search</button>
             </form>
-            {this.displayStocks}
+            {this.state && this.state.found && <>{this.state.found.bestMatches.map((stock,index) => <StockSearchCard stock={stock} key={index} handleBuy={this.handleBuy}/>)}</>}
             </div>
             <div className="col-sm-6" >
               <h2>Your Current Portfolio</h2>

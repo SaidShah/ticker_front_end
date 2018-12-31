@@ -48,7 +48,7 @@ class NavBar extends Component {
             </>
              :
             <>
-            <li className="user-funds">Current Balance: $ {this.props.currentUser.account.total_funds}</li>
+            <li className="user-funds">Current Balance: $ {parseFloat(this.props.currentUser.account.total_funds).toFixed(2)}</li>
              <li><Link to="/" onClick={(e)=>this.props.handleLogout(e)}><span className="glyphicon glyphicon-log-out"></span> Log out </Link></li>
             </>
           }
