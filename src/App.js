@@ -23,7 +23,6 @@ class App extends Component {
     }).then(resp=>resp.json())
     .then(user => {
       localStorage.setItem("token",user.jwt)
-
       this.setState({
         user: user.user, isChanged: !this.state.isChanged
       })

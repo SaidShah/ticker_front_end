@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Marketplace from "../components/Marketplace";
 import EachStock from "../components/EachStock";
 import { Switch, Route, withRouter, Link } from "react-router-dom";
 import "../App.css";

@@ -9,7 +9,7 @@ class StockSearchCard extends Component {
   handleBuy=(e, stock, quantity)=>{
     e.preventDefault()
     let totalQuantity = parseInt(quantity)
-    this.props.handleBuy(e,stock,quantity)
+    this.props.handleBuy(e,stock,totalQuantity)
     this.setState({quantity: ''})
   }
 
@@ -40,7 +40,6 @@ class StockSearchCard extends Component {
                     <button type="submit" className="btn btn-primary mb-2 sell-btn">Buy</button>
                 </div>
               </form>
-
           </div>
         </div>
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css'
 import StockMarquee from './StockMarquee'
 import Account from './Account'
-import {Link, Route, Switch, withRouter, Redirect} from 'react-router-dom'
+import {Link, Route, withRouter} from 'react-router-dom'
 
 class NavBar extends Component {
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch, withRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class EachStock extends Component {
 
@@ -112,7 +112,7 @@ class EachStock extends Component {
               Company Link:&nbsp;&nbsp;{" "}
               <a
                 href={`https://${this.state.stockNews.company_url}`}
-                target="_blank"
+                target="_blank" rel="noopener noreferrer"
               >
                 {this.state.stockNews.company_url}
                 &nbsp;&nbsp;&nbsp;

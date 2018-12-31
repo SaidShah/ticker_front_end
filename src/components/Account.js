@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom'
 import Marketplace from './Marketplace'
 import StockSearchCard from './StockSearchCard'
 
@@ -37,7 +36,6 @@ class Account extends Component {
   sellStocks=(e,stock, quantitySelling, user, account, currentPrice)=>{
     e.preventDefault()
     let stockPrice = parseFloat(currentPrice)
-    let symbol = stock.symbol
     let totalValue = quantitySelling * stockPrice// the total price of sold stocks
     let newStockCount = stock.total_quantity - quantitySelling// num of shares left after selling some
     let newAccountBalance = totalValue + parseFloat(account.total_funds)
@@ -64,11 +62,12 @@ class Account extends Component {
   }
 
   handleBuy=(e,stock, quantity)=>{
+  let user = this.state.user
 
   }
 
   getStocks=()=>{
-    if(this.state.user.stocks.length == 0){
+    if(this.state.user.stocks.length === 0){
       return <h3>You currently do not own any stocks</h3>
     }else{
       let arr = this.state.user.stocks.map(a =>{

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Route, Switch, withRouter, Redirect} from 'react-router-dom'
+import {Route, Switch, withRouter} from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import '../App.css'
 import HomeContainer from '../containers/HomeContainer'
@@ -8,7 +8,6 @@ import StockDataContainer from '../containers/StockDataContainer'
 import SignupForm from '../components/SignupForm'
 import LoginForm from '../components/LoginForm'
 import Footer from '../components/Footer'
-import Account from '../components/Account'
 
 
 class WholePage extends Component {
