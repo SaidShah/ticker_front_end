@@ -69,11 +69,13 @@ class Account extends Component {
   let total_funds = parseFloat(user.account.total_funds - total_value)
   let symbol=stock["1. symbol"]
   let user_id = user.person.id
+  let count = parseInt(quantity)
   fetch(`http://localhost:3000/users/${user_id}/stocks`,{method: "POST",
   headers: {"Content-Type": "application/json",
             Accept:"application/json"},
-  body: JSON.stringify({values:{total_value: total_value, total_funds: total_funds, symbol: symbol, user_id: user_id,quantity:quantity, purchase_price: price}})
+  body: JSON.stringify({values:{total_value: total_value, total_funds: total_funds, symbol: symbol, user_id: user_id, quantity:count, purchase_price: price}})
     }).then(res => res.json()).then(console.log)
+    console.log(count);
   }
 
 
@@ -90,9 +92,7 @@ class Account extends Component {
 
 
   render() {
-    let arr = this.props.user ? this.props.user.stocks.map((a,i) =>{
-    return  i < 1 ? <Marketplace stock={a} key={a.symbol} sellStocks={this.sellStocks} user={this.state.user}/> : ""
-    }) : console.log(" no stocks")
+
     return (
     <>
       <div className="center-card">

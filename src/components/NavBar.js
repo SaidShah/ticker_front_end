@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css'
 import StockMarquee from './StockMarquee'
-import Account from './Account'
-import {Link, Route, withRouter} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 
 class NavBar extends Component {
 
@@ -62,7 +61,7 @@ class NavBar extends Component {
       </div>
     );
 
-    
+
   }
 
 }
