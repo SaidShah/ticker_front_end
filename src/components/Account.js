@@ -8,10 +8,10 @@ class Account extends Component {
   isChanged: false,
   name: '',
   user: null,
-  stocks: ''
+  stocks: '',
+  search: ' ',
+  found: []
   }
-
-
 
   componentDidMount() {
    this.forceUpdate()
@@ -30,9 +30,7 @@ class Account extends Component {
          user: user.user,isChanged: !this.state.isChanged
        })
      })
-     }
-     
-
+    }
   }
 
   sellStocks=(e,stock, quantitySelling, user, account, currentPrice)=>{
@@ -47,12 +45,21 @@ class Account extends Component {
     fetch(`http://localhost:3000/users/${user.id}/stocks/${stock.id}`, {method: "PATCH",
     headers: {"Content-Type": "application/json", Accept: "application/json"},
     body: data
-  }).then(res => res.json())
-  .then(user =>{
-    this.setState({isChanged: !this.state.isChanged, user: user, stocks: user.stocks})
+    }).then(res => res.json())
+      .then(user =>{
+        this.setState({isChanged: !this.state.isChanged, user: user, stocks: user.stocks})
+    })
+  }
+  handleChange=(e)=>{
+    this.setState({search: e.target.value})
 
-  })
+  }
 
+  handleSubmit=(e,term)=>{
+    e.preventDefault()
+    fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${term}&apikey=`)
+    .then(res => res.json())
+    .then(stocks => this.setState({found: stocks}))
   }
 
   getStocks=()=>{
@@ -64,13 +71,21 @@ class Account extends Component {
       })
       return arr
     }
+  }
+
+  displayStocks=()=>{
+    if(this.state.found.length > 1){
+        let newStocks = this.state.found.map(eachStock =>{
+          console.log(eachStock);
+      })
+    }
 
   }
 
   render() {
 
     return (
-      <>
+    <>
       <div className="center-card">
       <div className="card cardBoarder account-card">
         <div className="card-header card-title center-text">
@@ -84,6 +99,11 @@ class Account extends Component {
           <div className="row">
             <div className="col-sm-6">
             <h2>Find Stocks</h2>
+            <form className="form-inline sell-form-padding center-card" onSubmit={(e)=>this.handleSubmit(e,this.state.search)}>
+              <input className="form-control" type="text" id="search" min="0" name="search" placeholder="enter symbol...." onChange={this.handleChange} value={this.state.search}/>
+              <button type="submit" className="btn btn-primary mb-2 sell-btn search-padding">Search</button>
+            </form>
+            {this.displayStocks}
             </div>
             <div className="col-sm-6" >
               <h2>Your Current Portfolio</h2>
@@ -92,8 +112,7 @@ class Account extends Component {
           </div>
         </div>
       </div>
-
-      </>
+    </>
 
     );
   }

@@ -7,7 +7,7 @@ import {Link, Route, Switch, withRouter, Redirect} from 'react-router-dom'
 class NavBar extends Component {
 
   state={
-    didRefresh: true
+    didRefresh: true,
   }
 
   componentDidMount() {
@@ -57,8 +57,8 @@ class NavBar extends Component {
         </div>
         </nav>
         <StockMarquee/>
-        
-        <Route path="/account" component={Account}/>
+
+        <Route path="/account" component={Account} user={this.state.user}/>
       </div>
     );
   }
