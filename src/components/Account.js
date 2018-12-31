@@ -7,7 +7,7 @@ class Account extends Component {
   state={
   isChanged: false,
   name: '',
-  user: null,
+  user:  null ,
   stocks: '',
   search: ' ',
   found: ''
@@ -27,11 +27,12 @@ class Account extends Component {
      .then(user => {
        localStorage.setItem("token",user.jwt)
        this.setState({
-         user: user.user,isChanged: !this.state.isChanged
+         user: user.user,isChanged: !this.state.isChanged, stocks: user.user.stocks
        })
      })
     }
   }
+
 
   sellStocks=(e,stock, quantitySelling, user, account, currentPrice)=>{
     e.preventDefault()
@@ -44,11 +45,12 @@ class Account extends Component {
     fetch(`http://localhost:3000/users/${user.id}/stocks/${stock.id}`, {method: "PATCH",
     headers: {"Content-Type": "application/json", Accept: "application/json"},
     body: data
-    }).then(res => res.json())
-      .then(user =>{
-        this.setState({isChanged: !this.state.isChanged, user: user, stocks: user.stocks})
+  }).then(res => res.json())
+      .then(updatedInfo =>{
+        this.setState({isChanged: !this.state.isChanged, user: updatedInfo, stocks: updatedInfo.stocks})
     })
   }
+
   handleChange=(e)=>{
     this.setState({search: e.target.value})
   }
@@ -61,9 +63,17 @@ class Account extends Component {
 
   }
 
-  handleBuy=(e,stock, quantity)=>{
+  handleBuy=(e,stock, quantity, price)=>{
   let user = this.state.user
-
+  let total_value = parseFloat(quantity*price).toFixed(2)
+  let total_funds = parseFloat(user.account.total_funds - total_value)
+  let symbol=stock["1. symbol"]
+  let user_id = user.person.id
+  fetch(`http://localhost:3000/users/${user_id}/stocks`,{method: "POST",
+  headers: {"Content-Type": "application/json",
+            Accept:"application/json"},
+  body: JSON.stringify({values:{total_value: total_value, total_funds: total_funds, symbol: symbol, user_id: user_id,quantity:quantity, purchase_price: price}})
+    }).then(res => res.json()).then(console.log)
   }
 
 
@@ -71,7 +81,7 @@ class Account extends Component {
     if(this.state.user.stocks.length === 0){
       return <h3>You currently do not own any stocks</h3>
     }else{
-      let arr = this.state.user.stocks.map(a =>{
+      let arr = this.state.stocks.map(a =>{
         return <Marketplace stock={a} key={a.symbol} sellStocks={this.sellStocks} user={this.state.user}/>
       })
       return arr
@@ -80,7 +90,9 @@ class Account extends Component {
 
 
   render() {
-
+    let arr = this.props.user ? this.props.user.stocks.map((a,i) =>{
+    return  i < 1 ? <Marketplace stock={a} key={a.symbol} sellStocks={this.sellStocks} user={this.state.user}/> : ""
+    }) : console.log(" no stocks")
     return (
     <>
       <div className="center-card">
@@ -104,7 +116,10 @@ class Account extends Component {
             </div>
             <div className="col-sm-6" >
               <h2>Your Current Portfolio</h2>
-              {this.state && this.state.user && this.state.user.stocks && this.state.user.stocks.map(eachStock =><Marketplace stock={eachStock} key={eachStock.symbol} sellStocks={this.sellStocks} user={this.state.user}/>)}
+
+              {this.props.user && this.props.user.stocks.map((a,i) =>{
+                return <Marketplace stock={a} key={a.symbol} sellStocks={this.sellStocks} user={this.state.user}/>
+              })}
             </div>
           </div>
         </div>

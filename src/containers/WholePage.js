@@ -8,6 +8,7 @@ import StockDataContainer from '../containers/StockDataContainer'
 import SignupForm from '../components/SignupForm'
 import LoginForm from '../components/LoginForm'
 import Footer from '../components/Footer'
+import Account from '../components/Account'
 
 
 class WholePage extends Component {
@@ -99,6 +100,7 @@ class WholePage extends Component {
           <Route path="/marketplace" render={()=><MarketplaceContainer/>}/>
           <Route path="/signup" render={()=><SignupForm handleSignUp={this.props.handleSignUp}/>}/>
           <Route path="/login" render={()=><LoginForm handleLoginSubmit={this.props.handleLoginSubmit}/>}/>
+          <Route path="/account" render={()=><Account user={this.props.currentUser}/>}/>
           <Route exact path="/" render={()=><HomeContainer user={this.state.user}/>} handleChange={this.handleChange}/>
         </Switch>
         <Footer/>

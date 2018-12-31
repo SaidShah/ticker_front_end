@@ -19,7 +19,9 @@ class Marketplace extends Component{
     let account = this.props.user.account
     let price = parseFloat(this.state.currentPrice).toFixed(2)
     if(parseInt(stock.total_quantity) < parseInt(this.state.totalStocks)){
-      alert("You Dont Have Enough Shares")
+      alert("You Do not Have Enough Shares")
+    }else if(!this.state.totalStocks || this.state.totalStocks===''){
+        alert("Please enter a valid number")
     }else{
       this.props.sellStocks(e,stock, this.state.totalStocks, user, account, price)
    }
@@ -42,12 +44,12 @@ class Marketplace extends Component{
         currentPrice: stock.last_trade_price
       })
     })
-
   }
 
 
   render() {
     const {stock} = this.props
+    console.log(this.props);
 return(
       <>
         <div className="card cardBoarder current-portfolio">
@@ -60,7 +62,7 @@ return(
               <span> Current Shares:&nbsp;&nbsp; {this.state.stocks.total_quantity} </span>
               <br></br>&nbsp;&nbsp;&nbsp; <span> Purchase Price (per share):&nbsp;&nbsp; $ {parseFloat(this.state.stocks.purchase_price).toFixed(2)} </span>
               </p>
-            <p className="card-text bolden-text">Current Price (per share): {this.getCurrentPrice(this.state.stocks.symbol)}$ {parseFloat(this.state.currentPrice).toFixed(2)}</p>
+            <p className="card-text bolden-text">Current Price (per share): $ {parseFloat(this.state.currentPrice).toFixed(2)}</p>
               <form className="form-inline sell-form-padding center-card" onSubmit={(e)=>this.sellStocks(e,stock, this.state, this.state.currentPrice)}>
                 <div className="form-group form-group-sm">
                     <label className="col-sm-3 control-label sell-form-text" htmlFor="sell">Quantity:</label>

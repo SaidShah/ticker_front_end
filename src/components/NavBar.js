@@ -58,9 +58,11 @@ class NavBar extends Component {
         </nav>
         <StockMarquee/>
 
-        <Route path="/account" component={Account} user={this.state.user}/>
+
       </div>
     );
+
+    
   }
 
 }

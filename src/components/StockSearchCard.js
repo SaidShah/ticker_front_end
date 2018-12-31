@@ -3,18 +3,35 @@ import React, { Component } from 'react';
 class StockSearchCard extends Component {
 
   state={
-    quantity: ''
+    quantity: '',
+    currentPrice: ''
   }
 
-  handleBuy=(e, stock, quantity)=>{
+  handleBuy=(e, stock, quantity, price)=>{
     e.preventDefault()
     let totalQuantity = parseInt(quantity)
-    this.props.handleBuy(e,stock,totalQuantity)
+
+    this.props.handleBuy(e,stock,totalQuantity, price)
     this.setState({quantity: ''})
   }
 
   handleChange=(e)=>{
     this.setState({quantity: e.target.value})
+  }
+
+  getQuote=(symbol)=>{
+    if(!symbol.includes("-") && !symbol.includes(".")){
+    fetch(`https://api.robinhood.com/quotes/${symbol}/`)
+    .then(res => {
+      if (res.status === 200) {
+        return res.json()
+      }else {
+        return ""
+      }
+
+    }).then(price => this.setState({currentPrice: price.last_trade_price}))
+    .catch(err => console.log(err))
+  }
   }
 
   render() {
@@ -30,8 +47,9 @@ class StockSearchCard extends Component {
               <span> Type:&nbsp;&nbsp; {this.props.stock["3. type"]}</span>
               <br></br>&nbsp;&nbsp;&nbsp; <span> Region: &nbsp;&nbsp;  {this.props.stock["4. region"]}</span>
               </p>
-            <p className="card-text bolden-text">Currency:  {this.props.stock["8. currency"]}</p>
-              <form className="form-inline sell-form-padding center-card" onSubmit={(e=>{this.handleBuy(e,this.props.stock, this.state.quantity)})}>
+              <p className="card-text bolden-text">Current Price:&nbsp;&nbsp;{this.getQuote(this.props.stock["1. symbol"])}{parseFloat(this.state.currentPrice).toFixed(2)}</p>
+            <p className="card-text bolden-text">Currency:&nbsp;&nbsp;{this.props.stock["8. currency"]}</p>
+              <form className="form-inline sell-form-padding center-card" onSubmit={(e=>{this.handleBuy(e,this.props.stock, this.state.quantity, this.state.currentPrice)})}>
                 <div className="form-group form-group-sm">
                     <label className="col-sm-3 control-label sell-form-text" htmlFor="buy">Quantity:</label>
                     <div className="col-sm-7">
