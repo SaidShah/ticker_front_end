@@ -67,6 +67,7 @@ class MarketplaceContainer extends Component {
       });
   }
 
+
   getRandomStocks = () => {
     let indexes = [];
     let stocks = [...this.state.popularStocks];

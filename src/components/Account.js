@@ -66,6 +66,7 @@ class Account extends Component {
 
   }
 
+
   getStocks=()=>{
     if(this.state.user.stocks.length === 0){
       return <h3>You currently do not own any stocks</h3>
@@ -103,7 +104,7 @@ class Account extends Component {
             </div>
             <div className="col-sm-6" >
               <h2>Your Current Portfolio</h2>
-              {this.state.user == null ? null : this.getStocks()}
+              {this.state && this.state.user && this.state.user.stocks && this.state.user.stocks.map(eachStock =><Marketplace stock={eachStock} key={eachStock.symbol} sellStocks={this.sellStocks} user={this.state.user}/>)}
             </div>
           </div>
         </div>

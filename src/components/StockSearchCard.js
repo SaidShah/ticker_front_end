@@ -40,6 +40,7 @@ class StockSearchCard extends Component {
                     <button type="submit" className="btn btn-primary mb-2 sell-btn">Buy</button>
                 </div>
               </form>
+
           </div>
         </div>
 
