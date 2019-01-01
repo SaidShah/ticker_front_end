@@ -9,10 +9,13 @@ class StockSearchCard extends Component {
 
   handleBuy=(e, stock, quantity, price)=>{
     e.preventDefault()
+    if(price){
     let totalQuantity = parseInt(quantity)
-
     this.props.handleBuy(e,stock,totalQuantity, price)
     this.setState({quantity: ''})
+  }else {
+    alert("Sorry that stock is not available")
+   }
   }
 
   handleChange=(e)=>{
@@ -20,19 +23,19 @@ class StockSearchCard extends Component {
   }
 
   getQuote=(symbol)=>{
-    if(!symbol.includes("-") && !symbol.includes(".")){
     fetch(`https://api.robinhood.com/quotes/${symbol}/`)
     .then(res => {
       if (res.status === 200) {
         return res.json()
-      }else {
-        return ""
+      }else{
+        return null
       }
+    })
+    .then(price => {if (price !== null) (this.setState({currentPrice: price.last_trade_price}))})
+    .catch(err => this.setState({currentPrice: "1"}))
+  }
 
-    }).then(price => this.setState({currentPrice: price.last_trade_price}))
-    .catch(err => console.log(err))
-  }
-  }
+
 
   render() {
     return (

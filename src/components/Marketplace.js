@@ -13,6 +13,16 @@ class Marketplace extends Component{
     currentPrice: ''
   }
 
+  componentDidMount() {
+    fetch(`https://api.robinhood.com/quotes/${this.props.stock.symbol}/`)
+    .then(res => res.json())
+    .then(stock =>{
+      this.setState({
+        currentPrice: stock.last_trade_price
+      })
+    })
+  }
+
   sellStocks=(e,stock, quantity, currentPrice)=>{
     e.preventDefault()
     let user = this.props.user.person
@@ -36,21 +46,8 @@ class Marketplace extends Component{
     })
   }
 
-  getCurrentPrice=(symbol)=>{
-    fetch(`https://api.robinhood.com/quotes/${symbol}/`)
-    .then(res => res.json())
-    .then(stock =>{
-      this.setState({
-        currentPrice: stock.last_trade_price
-      })
-      console.log("CURRENT PRICE", stock);
-    })
-  }
-
-
   render() {
     const {stock} = this.props
-    console.log(stock, "THIS IS STOCK");
 return(
       <>
         <div className="card cardBoarder current-portfolio">
@@ -63,7 +60,7 @@ return(
               <span> Current Shares:&nbsp;&nbsp; {stock.total_quantity} </span>
               <br></br>&nbsp;&nbsp;&nbsp; <span> Purchase Price (per share):&nbsp;&nbsp; $ {parseFloat(stock.purchase_price).toFixed(2)} </span>
               </p>
-            <p className="card-text bolden-text">Current Price (per share): $ {this.getCurrentPrice(stock.symbol)}{parseFloat(this.state.currentPrice).toFixed(2)}</p>
+            <p className="card-text bolden-text">Current Price (per share): $ {parseFloat(this.state.currentPrice).toFixed(2)}</p>
               <form className="form-inline sell-form-padding center-card" onSubmit={(e)=>this.sellStocks(e,stock, this.state, this.state.currentPrice)}>
                 <div className="form-group form-group-sm">
                     <label className="col-sm-3 control-label sell-form-text" htmlFor="sell">Quantity:</label>

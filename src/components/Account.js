@@ -9,7 +9,7 @@ class Account extends Component {
   name: '',
   user:  null ,
   stocks: '',
-  search: ' ',
+  search: '',
   found: ''
   }
 
@@ -27,7 +27,6 @@ class Account extends Component {
      .then(user => {
        localStorage.setItem("token",user.jwt)
        this.props.setUser(user.user)
-       console.log(user.user , "THIS IS THE USER IN ACCOUNT");
      })
     }
   }
@@ -54,9 +53,21 @@ class Account extends Component {
 
   handleSubmit=(e,term)=>{
     e.preventDefault()
+    let foundStocks = []
     fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${term}&apikey=`)
     .then(res => res.json())
-    .then(stocks => this.setState({found: stocks}))
+    .then(stocks => {
+      this.sortStocks(stocks.bestMatches)
+    })
+  }
+
+  sortStocks=(stocks)=>{
+    let newList = stocks.filter(eachStock =>{
+      if(!eachStock["1. symbol"].includes("-") && !eachStock["1. symbol"].includes(".")){
+        return eachStock
+      }
+    })
+    this.setState({found: newList})
 
   }
 
@@ -91,7 +102,6 @@ class Account extends Component {
 
 
   render() {
-    console.log(this.props.user);
     return (
     <>
       <div className="center-card">
@@ -111,7 +121,7 @@ class Account extends Component {
               <input className="form-control" type="text" id="search" min="0" name="search" placeholder="enter symbol...." onChange={this.handleChange} value={this.state.search}/>
               <button type="submit" className="btn btn-primary mb-2 sell-btn search-padding">Search</button>
             </form>
-            {this.state && this.state.found && <>{this.state.found.bestMatches.map((stock,index) => <StockSearchCard stock={stock} key={index} handleBuy={this.handleBuy}/>)}</>}
+            {this.state && this.state.found && <>{this.state.found.map((stock,index) => <StockSearchCard stock={stock} key={index} handleBuy={this.handleBuy}/>)}</>}
             </div>
             <div className="col-sm-6" >
               <h2>Your Current Portfolio</h2>
