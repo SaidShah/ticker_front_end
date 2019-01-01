@@ -31,7 +31,7 @@ class NavBar extends Component {
              <li><Link to="/marketplace" onClick={this.handleClick}>Marketplace</Link></li>
             {this.props.currentUser !== null && this.props.currentUser !== undefined ? <>
 
-              <li><Link to="/stockdata" onClick={this.handleClick}>Buy / Sell</Link></li><li><Link to="/profile" onClick={this.handleClick}>Profile</Link></li><li><Link to="/account" onClick={this.handleClick}>Account</Link></li></> : ''
+              <li><Link to="/profile" onClick={this.handleClick}>Profile</Link></li><li><Link to="/account" onClick={this.handleClick}>Buy / Sell</Link></li></> : ''
 
               }
             <li>

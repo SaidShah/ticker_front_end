@@ -55,6 +55,11 @@ class App extends Component {
     this.props.history.push("/")
    }
 
+   handleEdit=(user)=>{
+     this.setState({user: user})
+     this.props.history.push("/")
+   }
+
 
     handleLoginSubmit = (e, user) =>{
         e.preventDefault()
@@ -87,7 +92,7 @@ class App extends Component {
     return (
       <div className="App">
 
-        <WholePage givenUser={this.props} currentUser={this.state.user} handleLogout={this.handleLogout} handleSignUp={this.handleSignUp}  handleLoginSubmit={this.handleLoginSubmit}/>
+        <WholePage givenUser={this.props} currentUser={this.state.user} handleLogout={this.handleLogout} handleSignUp={this.handleSignUp}  handleLoginSubmit={this.handleLoginSubmit} handleEdit={this.handleEdit}/>
       </div>
     );
   }

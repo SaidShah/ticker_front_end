@@ -23,9 +23,9 @@ class SignupForm extends Component {
   }
 
   handleSubmit = (e,user)=>{
-     e.preventDefault()
-    this.props.handleSignUp(e,user)
-    this.setState({
+      e.preventDefault()
+      this.props.handleSignUp(e,user)
+      this.setState({
       username: '',
       password: '',
       first_name: '',
@@ -40,6 +40,21 @@ class SignupForm extends Component {
     })
   }
 
+  componentDidMount() {
+    this.props.user && this.props.user.person && this.setState({
+      username: this.props.user.person.username,
+      first_name: this.props.user.person.first_name,
+      last_name: this.props.user.person.last_name,
+      house_number: this.props.user.person.house_number,
+      street_name: this.props.user.person.street_name,
+      city: this.props.user.person.city,
+      state: this.props.user.person.state,
+      zipcode: this.props.user.person.zipcode,
+      email: this.props.user.person.email,
+      dob: this.props.user.person.date_of_birth
+    })
+  }
+
   render() {
     return (
       <div className="container ">
@@ -51,11 +66,11 @@ class SignupForm extends Component {
               <div className="input-group margin-bottom-20">
                   <span className="input-group-addon"><i className="glyphicon glyphicon-user mycolor"></i></span>
                   <input className="form-control" placeholder="User Name" name="username" type="text" onChange={this.handleChange} value={this.state.username} required/></div><br></br>
-
+            {!this.props.user ? <>
               <div className="input-group margin-bottom-20">
                   <span className="input-group-addon"><i className="glyphicon glyphicon-lock mycolor"></i></span>
                   <input className="form-control" placeholder="Password" name="password" type="password" onChange={this.handleChange} value={this.state.password} required/></div><br></br>
-
+            </> : null}
               <div className="input-group margin-bottom-20">
                   <span className="input-group-addon"><i className="glyphicon glyphicon-user mycolor"></i></span>
                   <input className="form-control" placeholder="First Name" name="first_name" type="text" onChange={this.handleChange} value={this.state.first_name} required/></div><br></br>
@@ -90,7 +105,7 @@ class SignupForm extends Component {
 
               <div className="input-group margin-bottom-20">
                   <span className="input-group-addon"><i className="glyphicon glyphicon-gift mycolor"></i></span>
-                  <input className="form-control" placeholder="Date of birth ex. 04/05/1996" name="dob" type="text" onChange={this.handleChange} value={this.state.dob} required/></div><br></br>
+                  <input className="form-control" placeholder="Date of birth ex. 04/05/1996" name="dob" type="text" onChange={this.handleChange} value={this.state.dob} /></div><br></br>
 
               <div className="row">
                   <div className="col-md-12">

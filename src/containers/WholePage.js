@@ -17,77 +17,14 @@ class WholePage extends Component {
     isChanged: false
   }
 
- //
- //  handleSignUp=(e, user)=>{
- //
- //   let newUser = JSON.stringify({user:{first_name:user.first_name,last_name:user.last_name,house_number:user.house_number,street_name: user.street_name, city: user.city,state:user.state,zipcode:user.zipcode,date_of_birth:user.dob,username: user.username,password: user.password,email:user.email}})
- //   fetch('http://localhost:3000/users',{method: "POST",
- //    headers:{
- //      "Content-Type":"application/json",
- //      Accepts: "application/json"
- //    },
- //    body: newUser
- //  }).then(resp=>resp.json())
- //  .then(user => {
- //    localStorage.setItem("token",user.jwt)
- //
- //    this.setState({
- //      user: user.user, isChanged: !this.state.isChanged
- //    })
- //  })
- //  this.props.history.push("/")
- //  }
- //
- //  redirectUser=()=>{
- //    return <Redirect to="/" user={this.state.user}/>
- //  }
- //
- //  componentDidMount() {
- //    let token = localStorage.getItem("token")
- //    if(token){
- //      fetch("http://localhost:3000/current_user",{method: "GET",
- //      headers: {
- //      "Content-Type":"application/json",
- //      Action: "application/json",
- //      Authorization:`${token}`
- //    }
- //  }).then(res => res.json())
- //  .then(user => {
- //    localStorage.setItem("token",user.jwt)
- //    this.setState({
- //      user: user.user,isChanged: !this.state.isChanged
- //    })
- //  })
- //  }
- //  this.props.history.push("/")
- // }
- //
- //
- //  handleLoginSubmit = (e, user) =>{
- //      e.preventDefault()
- //    fetch("http://localhost:3000/login",{method: "POST",
- //    headers:{
- //      "Content-Type":"application/json",
- //      Accepts:"application/json"
- //    },body:JSON.stringify({user:{username: user.username, password: user.password}})
- //  }).then(resp => resp.json())
- //    .then(user =>{
- //      localStorage.setItem("token",user.jwt)
- //      this.setState({
- //        user: user.user,isChanged: !this.state.isChanged
- //      })
- //    })
- //    this.props.history.push("/")
- //  }
- //
- //  handleLogout=(e)=>{
- //    e.preventDefault()
- //    localStorage.removeItem("token")
- //    this.setState({
- //      user: null
- //    })
- //    this.props.history.push("/")
- //  }
+ handleEdit=(e,user )=>{
+   let user_id = this.props.currentUser.person.id
+   fetch(`http://localhost:3000/users/${user_id}`,{method: "PATCH",
+    headers: {"Content-Type":"application/json",Accepts:"application/json"},
+    body: JSON.stringify({user:{user_id: user_id, first_name:user.first_name,last_name:user.last_name,house_number:user.house_number,street_name: user.street_name, city: user.city,state:user.state,zipcode:user.zipcode,date_of_birth:user.dob,username: user.username,email:user.email}})
+  }).then(res => res.json())
+  .then(user =>{this.props.handleEdit(user)})
+ }
 
 
   render() {
@@ -101,6 +38,7 @@ class WholePage extends Component {
           <Route path="/signup" render={()=><SignupForm handleSignUp={this.props.handleSignUp}/>}/>
           <Route path="/login" render={()=><LoginForm handleLoginSubmit={this.props.handleLoginSubmit}/>}/>
           <Route path="/account" render={()=><Account user={this.props.currentUser}/>}/>
+          <Route path='/profile' render={()=><SignupForm user={this.props.currentUser} handleSignUp={this.handleEdit}/>}/>
           <Route exact path="/" render={()=><HomeContainer user={this.state.user}/>} handleChange={this.handleChange}/>
         </Switch>
         <Footer/>
