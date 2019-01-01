@@ -49,6 +49,7 @@ class Marketplace extends Component{
 
   render() {
     const {stock} = this.props
+    console.log(this.props);
 return(
       <>
         <div className="card cardBoarder current-portfolio">

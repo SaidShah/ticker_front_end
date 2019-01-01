@@ -60,6 +60,10 @@ class App extends Component {
      this.props.history.push("/")
    }
 
+   handleBuy=(user)=>{
+    this.setState({user:user})
+   }
+
 
     handleLoginSubmit = (e, user) =>{
         e.preventDefault()
@@ -87,12 +91,17 @@ class App extends Component {
       this.props.history.push("/")
     }
 
+    handleSell=(user)=>{
+      this.setState({user: user})
+      this.props.history.push("/account")
+    }
+
 
   render() {
     return (
       <div className="App">
 
-        <WholePage givenUser={this.props} currentUser={this.state.user} handleLogout={this.handleLogout} handleSignUp={this.handleSignUp}  handleLoginSubmit={this.handleLoginSubmit} handleEdit={this.handleEdit}/>
+        <WholePage givenUser={this.props} currentUser={this.state.user} handleLogout={this.handleLogout} handleSignUp={this.handleSignUp}  handleLoginSubmit={this.handleLoginSubmit} handleEdit={this.handleEdit} handleSell={this.handleSell} handleBuy={this.handleBuy}/>
       </div>
     );
   }

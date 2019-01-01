@@ -26,6 +26,27 @@ class WholePage extends Component {
   .then(user =>{this.props.handleEdit(user)})
  }
 
+ componentDidMount() {
+  this.forceUpdate()
+  let token = localStorage.getItem("token")
+  if(token){
+    fetch("http://localhost:3000/current_user",{method: "GET",
+    headers: {
+    "Content-Type":"application/json",
+    Action: "application/json",
+    Authorization:`${token}`
+  }
+    }).then(res => res.json())
+    .then(user => {
+      localStorage.setItem("token",user.jwt)
+      this.setState({
+        user: user.user
+      })
+    })
+   }
+ }
+
+
 
   render() {
 
@@ -34,10 +55,10 @@ class WholePage extends Component {
         <NavBar givenUser={this.props.givenUser} currentUser={this.props.currentUser} handleLogout={this.props.handleLogout}/>
         <Switch >
         <Route path="/stockdata" component={StockDataContainer}/>
-          <Route path="/marketplace" render={()=><MarketplaceContainer/>}/>
+          <Route path="/marketplace" render={()=><MarketplaceContainer user={this.props.currentUser}/>}/>
           <Route path="/signup" render={()=><SignupForm handleSignUp={this.props.handleSignUp}/>}/>
           <Route path="/login" render={()=><LoginForm handleLoginSubmit={this.props.handleLoginSubmit}/>}/>
-          <Route path="/account" render={()=><Account user={this.props.currentUser}/>}/>
+          <Route path="/account" render={()=><Account user={this.props.currentUser} handleSell={this.props.handleSell} handleBuy={this.props.handleBuy}/>}/>
           <Route path='/profile' render={()=><SignupForm user={this.props.currentUser} handleSignUp={this.handleEdit}/>}/>
           <Route exact path="/" render={()=><HomeContainer user={this.state.user}/>} handleChange={this.handleChange}/>
         </Switch>

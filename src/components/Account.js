@@ -13,25 +13,25 @@ class Account extends Component {
   found: ''
   }
 
-  componentDidMount() {
-   this.forceUpdate()
-   let token = localStorage.getItem("token")
-   if(token){
-     fetch("http://localhost:3000/current_user",{method: "GET",
-     headers: {
-     "Content-Type":"application/json",
-     Action: "application/json",
-     Authorization:`${token}`
-   }
-     }).then(res => res.json())
-     .then(user => {
-       localStorage.setItem("token",user.jwt)
-       this.setState({
-         user: user.user,isChanged: !this.state.isChanged, stocks: user.user.stocks
-       })
-     })
-    }
-  }
+  // componentDidMount() {
+  //  this.forceUpdate()
+  //  let token = localStorage.getItem("token")
+  //  if(token){
+  //    fetch("http://localhost:3000/current_user",{method: "GET",
+  //    headers: {
+  //    "Content-Type":"application/json",
+  //    Action: "application/json",
+  //    Authorization:`${token}`
+  //  }
+  //    }).then(res => res.json())
+  //    .then(user => {
+  //      localStorage.setItem("token",user.jwt)
+  //      this.setState({
+  //        user: user.user,isChanged: !this.state.isChanged, stocks: user.user.stocks
+  //      })
+  //    })
+  //   }
+  // }
 
 
   sellStocks=(e,stock, quantitySelling, user, account, currentPrice)=>{
@@ -46,9 +46,10 @@ class Account extends Component {
     headers: {"Content-Type": "application/json", Accept: "application/json"},
     body: data
   }).then(res => res.json())
-      .then(updatedInfo =>{
-        this.setState({isChanged: !this.state.isChanged, user: updatedInfo, stocks: updatedInfo.stocks})
-    })
+  .then(updatedAccountInfo =>(this.props.handleSell(updatedAccountInfo)))
+    //   .then(updatedInfo =>{
+    //     this.setState({isChanged: !this.state.isChanged, user: updatedInfo, stocks: updatedInfo.stocks})
+    // })
   }
 
   handleChange=(e)=>{
@@ -64,7 +65,7 @@ class Account extends Component {
   }
 
   handleBuy=(e,stock, quantity, price)=>{
-  let user = this.state.user
+  let user = this.props.user
   let total_value = parseFloat(quantity*price).toFixed(2)
   let total_funds = parseFloat(user.account.total_funds - total_value)
   let symbol=stock["1. symbol"]
@@ -74,16 +75,18 @@ class Account extends Component {
   headers: {"Content-Type": "application/json",
             Accept:"application/json"},
   body: JSON.stringify({values:{total_value: total_value, total_funds: total_funds, symbol: symbol, user_id: user_id, quantity:count, purchase_price: price}})
-    }).then(res => res.json()).then(console.log)
-    console.log(count);
+}).then(res => res.json()).then(updatedResponse =>{
+    let user={person: updatedResponse, account: updatedResponse.account, stocks: updatedResponse.stocks}
+    this.props.handleBuy(user)
+})
   }
 
 
   getStocks=()=>{
-    if(this.state.user.stocks.length === 0){
+    if(this.props.user.stocks.length === 0){
       return <h3>You currently do not own any stocks</h3>
     }else{
-      let arr = this.state.stocks.map(a =>{
+      let arr = this.props.stocks.map(a =>{
         return <Marketplace stock={a} key={a.symbol} sellStocks={this.sellStocks} user={this.state.user}/>
       })
       return arr
@@ -92,17 +95,16 @@ class Account extends Component {
 
 
   render() {
-
     return (
     <>
       <div className="center-card">
       <div className="card cardBoarder account-card">
         <div className="card-header card-title center-text">
-          Welcome&nbsp; {this.state.user == null ? null : this.state.user.person["first_name"]}
+          Welcome&nbsp; {this.props.user == null ? null : this.props.user.person["first_name"]}
         </div>
         <div className="card-body">
           <h4 className="card-title">Your current account balance is :&nbsp;&nbsp; $&nbsp;
-           {this.state.user == null ? null : parseFloat(this.state.user.account["total_funds"]).toFixed(2)}
+           {this.props.user == null ? null : parseFloat(this.props.user.account["total_funds"]).toFixed(2)}
           </h4>
           </div>
           <div className="row">
@@ -118,7 +120,7 @@ class Account extends Component {
               <h2>Your Current Portfolio</h2>
 
               {this.props.user && this.props.user.stocks.map((a,i) =>{
-                return <Marketplace stock={a} key={a.symbol} sellStocks={this.sellStocks} user={this.state.user}/>
+                return <Marketplace stock={a} key={a.symbol} sellStocks={this.sellStocks} user={this.props.user}/>
               })}
             </div>
           </div>
