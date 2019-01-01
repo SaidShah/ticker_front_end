@@ -26,6 +26,7 @@ class App extends Component {
       this.setState({
         user: user.user, isChanged: !this.state.isChanged
       })
+      console.log(this.state, "IN APP AFTER SIGN UP");
     })
     this.props.history.push("/")
     }
@@ -60,8 +61,9 @@ class App extends Component {
      this.props.history.push("/")
    }
 
-   handleBuy=(user)=>{
-    this.setState({user:user})
+
+   setUser=(user)=>{
+     this.setState({user: user})
    }
 
 
@@ -91,9 +93,15 @@ class App extends Component {
       this.props.history.push("/")
     }
 
+    handleBuy=(user)=>{
+     this.setState({user:user})
+     console.log(user, "THIS IS HANDLE BUY IN APP");
+    }
+
+
     handleSell=(user)=>{
       this.setState({user: user})
-      this.props.history.push("/account")
+      console.log(user, "THIS IS HANDLE SELL IN APP");
     }
 
 
@@ -101,7 +109,7 @@ class App extends Component {
     return (
       <div className="App">
 
-        <WholePage givenUser={this.props} currentUser={this.state.user} handleLogout={this.handleLogout} handleSignUp={this.handleSignUp}  handleLoginSubmit={this.handleLoginSubmit} handleEdit={this.handleEdit} handleSell={this.handleSell} handleBuy={this.handleBuy}/>
+        <WholePage givenUser={this.props} currentUser={this.state.user} handleLogout={this.handleLogout} handleSignUp={this.handleSignUp}  handleLoginSubmit={this.handleLoginSubmit} handleEdit={this.handleEdit} handleSell={this.handleSell} handleBuy={this.handleBuy} setUser={this.setUser}/>
       </div>
     );
   }

@@ -9,7 +9,7 @@ class Marketplace extends Component{
   state={
     totalStocks: '',
     clicked: false,
-    stocks: this.props.stock,
+    stocks: '',
     currentPrice: ''
   }
 
@@ -43,26 +43,27 @@ class Marketplace extends Component{
       this.setState({
         currentPrice: stock.last_trade_price
       })
+      console.log("CURRENT PRICE", stock);
     })
   }
 
 
   render() {
     const {stock} = this.props
-    console.log(this.props);
+    console.log(stock, "THIS IS STOCK");
 return(
       <>
         <div className="card cardBoarder current-portfolio">
           <div className="card-header card-title center-text same">
-            Symbol:&nbsp;&nbsp; {this.state.stocks.symbol}
+            Symbol:&nbsp;&nbsp; {stock.symbol}
           </div>
           <div className="card-body">
-            <h4 className="card-title">Total Value:&nbsp;&nbsp; $ {parseFloat(this.state.stocks.total_value).toFixed(2)}</h4>
+            <h4 className="card-title">Total Value:&nbsp;&nbsp; $ {parseFloat(stock.total_value).toFixed(2)}</h4>
             <p className="card-text bolden-text">
-              <span> Current Shares:&nbsp;&nbsp; {this.state.stocks.total_quantity} </span>
-              <br></br>&nbsp;&nbsp;&nbsp; <span> Purchase Price (per share):&nbsp;&nbsp; $ {parseFloat(this.state.stocks.purchase_price).toFixed(2)} </span>
+              <span> Current Shares:&nbsp;&nbsp; {stock.total_quantity} </span>
+              <br></br>&nbsp;&nbsp;&nbsp; <span> Purchase Price (per share):&nbsp;&nbsp; $ {parseFloat(stock.purchase_price).toFixed(2)} </span>
               </p>
-            <p className="card-text bolden-text">Current Price (per share): $ {parseFloat(this.state.currentPrice).toFixed(2)}</p>
+            <p className="card-text bolden-text">Current Price (per share): $ {this.getCurrentPrice(stock.symbol)}{parseFloat(this.state.currentPrice).toFixed(2)}</p>
               <form className="form-inline sell-form-padding center-card" onSubmit={(e)=>this.sellStocks(e,stock, this.state, this.state.currentPrice)}>
                 <div className="form-group form-group-sm">
                     <label className="col-sm-3 control-label sell-form-text" htmlFor="sell">Quantity:</label>

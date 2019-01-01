@@ -13,25 +13,24 @@ class Account extends Component {
   found: ''
   }
 
-  // componentDidMount() {
-  //  this.forceUpdate()
-  //  let token = localStorage.getItem("token")
-  //  if(token){
-  //    fetch("http://localhost:3000/current_user",{method: "GET",
-  //    headers: {
-  //    "Content-Type":"application/json",
-  //    Action: "application/json",
-  //    Authorization:`${token}`
-  //  }
-  //    }).then(res => res.json())
-  //    .then(user => {
-  //      localStorage.setItem("token",user.jwt)
-  //      this.setState({
-  //        user: user.user,isChanged: !this.state.isChanged, stocks: user.user.stocks
-  //      })
-  //    })
-  //   }
-  // }
+  componentDidMount() {
+   this.forceUpdate()
+   let token = localStorage.getItem("token")
+   if(token){
+     fetch("http://localhost:3000/current_user",{method: "GET",
+     headers: {
+     "Content-Type":"application/json",
+     Action: "application/json",
+     Authorization:`${token}`
+   }
+     }).then(res => res.json())
+     .then(user => {
+       localStorage.setItem("token",user.jwt)
+       this.props.setUser(user.user)
+       console.log(user.user , "THIS IS THE USER IN ACCOUNT");
+     })
+    }
+  }
 
 
   sellStocks=(e,stock, quantitySelling, user, account, currentPrice)=>{
@@ -47,9 +46,6 @@ class Account extends Component {
     body: data
   }).then(res => res.json())
   .then(updatedAccountInfo =>(this.props.handleSell(updatedAccountInfo)))
-    //   .then(updatedInfo =>{
-    //     this.setState({isChanged: !this.state.isChanged, user: updatedInfo, stocks: updatedInfo.stocks})
-    // })
   }
 
   handleChange=(e)=>{
@@ -95,12 +91,13 @@ class Account extends Component {
 
 
   render() {
+    console.log(this.props.user);
     return (
     <>
       <div className="center-card">
       <div className="card cardBoarder account-card">
         <div className="card-header card-title center-text">
-          Welcome&nbsp; {this.props.user == null ? null : this.props.user.person["first_name"]}
+           Welcome&nbsp; {this.props.user && this.props.user.person && this.props.user.person["first_name"]}
         </div>
         <div className="card-body">
           <h4 className="card-title">Your current account balance is :&nbsp;&nbsp; $&nbsp;

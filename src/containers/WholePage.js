@@ -26,6 +26,8 @@ class WholePage extends Component {
   .then(user =>{this.props.handleEdit(user)})
  }
 
+
+
  componentDidMount() {
   this.forceUpdate()
   let token = localStorage.getItem("token")
@@ -39,9 +41,7 @@ class WholePage extends Component {
     }).then(res => res.json())
     .then(user => {
       localStorage.setItem("token",user.jwt)
-      this.setState({
-        user: user.user
-      })
+      this.props.setUser(user.user)
     })
    }
  }
@@ -58,7 +58,7 @@ class WholePage extends Component {
           <Route path="/marketplace" render={()=><MarketplaceContainer user={this.props.currentUser}/>}/>
           <Route path="/signup" render={()=><SignupForm handleSignUp={this.props.handleSignUp}/>}/>
           <Route path="/login" render={()=><LoginForm handleLoginSubmit={this.props.handleLoginSubmit}/>}/>
-          <Route path="/account" render={()=><Account user={this.props.currentUser} handleSell={this.props.handleSell} handleBuy={this.props.handleBuy}/>}/>
+          <Route path="/account" render={()=><Account user={this.props.currentUser} handleSell={this.props.handleSell} handleBuy={this.props.handleBuy} setUser={this.props.setUser}/>}/>
           <Route path='/profile' render={()=><SignupForm user={this.props.currentUser} handleSignUp={this.handleEdit}/>}/>
           <Route exact path="/" render={()=><HomeContainer user={this.state.user}/>} handleChange={this.handleChange}/>
         </Switch>
