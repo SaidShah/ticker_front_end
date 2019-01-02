@@ -38,9 +38,6 @@ class Footer extends Component {
                 Useful links
               </h6>
               <p>
-                <Link to="/account">Your Account</Link>
-              </p>
-              <p>
                 <a href="#!">Become an Affiliate</a>
               </p>
               <p>

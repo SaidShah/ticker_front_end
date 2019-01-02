@@ -75,6 +75,7 @@ class Account extends Component {
   let user = this.props.user
   let total_value = parseFloat(quantity*price).toFixed(2)
   let total_funds = parseFloat(user.account.total_funds - total_value)
+  if(total_funds > 0){
   let symbol=stock["1. symbol"]
   let user_id = user.person.id
   let count = parseInt(quantity)
@@ -86,6 +87,9 @@ class Account extends Component {
     let user={person: updatedResponse, account: updatedResponse.account, stocks: updatedResponse.stocks}
     this.props.handleBuy(user)
 })
+}else {
+  alert("Sorry, You do not have enough money in your account")
+}
   }
 
 
