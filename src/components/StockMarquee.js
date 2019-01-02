@@ -4,46 +4,40 @@ import "../App.css";
 class StockMarquee extends Component {
   state = {
     symbols:["GOOG","TSLA","MSFT","AAPL","AMZN","EBAY","NKE","PFE","BAC","NOK","INTC","C","GE","FOX","T","WFC",
-              "RAD","VZ","ORCL","MS","TWTR","BABA","XOM","KO","MRK","ABX","GM","INFY","HES","DIS","GG","MET","HAL","WMT",
+              "RAD","VZ","ORCL","MS","TWTR","BABA","XOM","KO","MRK","GM","INFY","HES","DIS","GG","MET","HAL","WMT",
               "CVX","BB","X","BX","DAL","MGM","AIG","JCI","HPE","ATUS","WPX","CVS"],
     marqueeData: [],
     newData: [],
     isReloaded: true
   };
 
-  componentDidMount(prevProps, prevState) {
-    let symbols = this.state.symbols.join(",");
-    fetch(`https://api.robinhood.com/quotes/?symbols=${symbols}`)
-      .then(res => res.json())
-      .then(stocks =>
-        this.setState({
-          marqueeData: stocks.results
-        })
-      );
-    setInterval(() => {
+  componentDidMount() {
+    let symbols = this.state.symbols.join(",")
       fetch(`https://api.robinhood.com/quotes/?symbols=${symbols}`)
-        .then(res => res.json())
-        .then(stocks =>
-          this.setState({
-            newData: stocks.results
-          })
-        );
-    }, 15000);
+      .then(res =>res.json())
+      .then(stocks => this.setState({
+        marqueeData: stocks.results
+      }))
+      setInterval(()=>{
+      fetch(`https://api.robinhood.com/quotes/?symbols=${symbols}`)
+      .then(res =>res.json())
+      .then(stocks => this.setState({
+        newData: stocks.results
+      }))},4000)
 
-    setInterval(() => {
+       setInterval(()=>{
       fetch(`https://api.robinhood.com/quotes/?symbols=${symbols}`)
-        .then(res => res.json())
-        .then(stocks =>
-          this.setState({
-            marqueeData: stocks.results
-          })
-        );
-    }, 9000);
-  }
+      .then(res =>res.json())
+      .then(stocks => this.setState({
+        marqueeData: stocks.results
+      }))},5000)
+
+     }
 
   getData = () => {
     if (this.state.newData.length > 1 && this.state.marqueeData.length > 1) {
       let data = this.state.newData.map(eachStock => {
+        console.log(eachStock);
         let price = parseFloat(eachStock.last_trade_price).toFixed(2);
         let index = this.state.newData.indexOf(eachStock);
         let marqueeDataPrice = parseFloat(
@@ -120,6 +114,7 @@ class StockMarquee extends Component {
   };
 
   render() {
+    console.log(this.state.marqueeData);
     return (
       <div>
         <marquee className="up"> {this.getData()} </marquee>

@@ -31,7 +31,7 @@ class MarketplaceContainer extends Component {
       "XOM",
       "KO",
       "MRK",
-      "ABX",
+
       "GM",
       "INFY",
       "HES",
