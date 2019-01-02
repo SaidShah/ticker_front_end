@@ -1,12 +1,23 @@
-import React from 'react';
-import '../App.css'
+import React from "react";
+import "../App.css";
 
 const Jumbotron = () => (
   <div className="jumbotron my-jumbotron">
-
-        <img src={require(".././images/jumbotron_one2.png")} className="jumbotron-image" alt=""/>
-        <img src={require(".././images/jumbotron_3.png")} className="jumbotron-image" alt=""/>
-        <img src={require(".././images/jumbotron_5.png")} className="jumbotron-image" alt=""/>
+    <img
+      src={require(".././images/jumbotron_one2.png")}
+      className="jumbotron-image"
+      alt=""
+    />
+    <img
+      src={require(".././images/jumbotron_3.png")}
+      className="jumbotron-image"
+      alt=""
+    />
+    <img
+      src={require(".././images/jumbotron_5.png")}
+      className="jumbotron-image"
+      alt=""
+    />
   </div>
 );
 

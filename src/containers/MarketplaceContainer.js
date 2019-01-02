@@ -67,7 +67,6 @@ class MarketplaceContainer extends Component {
       });
   }
 
-
   getRandomStocks = () => {
     let indexes = [];
     let stocks = [...this.state.popularStocks];
@@ -88,52 +87,66 @@ class MarketplaceContainer extends Component {
   render() {
     let stockArr = this.state.stocksToShow.map(eachStock => {
       return (
-        <div className="center-text"  key={eachStock.symbol}>
-        <div className="card cardBoarder">
-          <div className="card-header card-title center-text">
-            Symbol:&nbsp;&nbsp; {eachStock.symbol}
-          </div>
-          <div className="card-body">
-            <h4 className="card-title">
-              Current Price:&nbsp;&nbsp; ${" "}
-              {parseFloat(eachStock.last_trade_price).toFixed(2)}
-            </h4>
-            <p className="card-text bolden-text">
-              <span>
-                {" "}
-                Previous Close:&nbsp;&nbsp; ${" "}
-                {parseFloat(eachStock.adjusted_previous_close).toFixed(2)}{" "}
-              </span>
-              &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{" "}
-              <span>
-                {" "}
-                Asking Price:&nbsp;&nbsp; ${" "}
-                {parseFloat(eachStock.ask_price).toFixed(2)}{" "}
-              </span>
-            </p>
-            <p className="card-text bolden-text">
-              Last extended hours trade price:&nbsp;&nbsp; ${" "}
-              {parseFloat(eachStock.last_extended_hours_trade_price).toFixed(2)}
-            </p>
-            <Link
-              to={`/marketplace/${eachStock.symbol}`}
-              className="btn btn-primary cardBoarder cardBtn">
-              view {eachStock.symbol}
-            </Link>
+        <div className="center-text" key={eachStock.symbol}>
+          <div className="card cardBoarder">
+            <div className="card-header card-title center-text">
+              Symbol:&nbsp;&nbsp; {eachStock.symbol}
+            </div>
+            <div className="card-body">
+              <h4 className="card-title">
+                Current Price:&nbsp;&nbsp; ${" "}
+                {parseFloat(eachStock.last_trade_price).toFixed(2)}
+              </h4>
+              <p className="card-text bolden-text">
+                <span>
+                  {" "}
+                  Previous Close:&nbsp;&nbsp; ${" "}
+                  {parseFloat(eachStock.adjusted_previous_close).toFixed(
+                    2
+                  )}{" "}
+                </span>
+                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{" "}
+                <span>
+                  {" "}
+                  Asking Price:&nbsp;&nbsp; ${" "}
+                  {parseFloat(eachStock.ask_price).toFixed(2)}{" "}
+                </span>
+              </p>
+              <p className="card-text bolden-text">
+                Last extended hours trade price:&nbsp;&nbsp; ${" "}
+                {parseFloat(eachStock.last_extended_hours_trade_price).toFixed(
+                  2
+                )}
+              </p>
+              <Link
+                to={`/marketplace/${eachStock.symbol}`}
+                className="btn btn-primary cardBoarder cardBtn"
+              >
+                view {eachStock.symbol}
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
       );
     });
 
     return (
-        <>
-
+      <>
         <Switch>
-          <Route exact path="/marketplace/:symbol" render={(props)=><EachStock stockData={props.match.params.symbol}/>}/>
-          <Route exact path="/marketplace" render={()=><div>{stockArr}</div>}/>
+          <Route
+            exact
+            path="/marketplace/:symbol"
+            render={props => (
+              <EachStock stockData={props.match.params.symbol} />
+            )}
+          />
+          <Route
+            exact
+            path="/marketplace"
+            render={() => <div>{stockArr}</div>}
+          />
         </Switch>
-        </>
+      </>
     );
   }
 }

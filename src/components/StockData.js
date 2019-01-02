@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class StockData extends Component {
-
   render() {
     return (
       <div>
@@ -9,7 +8,6 @@ class StockData extends Component {
       </div>
     );
   }
-
 }
 
 export default StockData;

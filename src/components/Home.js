@@ -1,26 +1,25 @@
-import React, { Component } from 'react';
-import Jumbotron from './Jumbotron'
+import React, { Component } from "react";
+import Jumbotron from "./Jumbotron";
 
 class Home extends Component {
-  state={
+  state = {
     isHere: false,
-    user: ''
-  }
+    user: ""
+  };
 
   componentDidMount() {
     this.setState({
       isHere: !this.state.isHere,
       user: this.props
-    })
+    });
   }
 
   render() {
     return (
       <div>
-        <Jumbotron/>
+        <Jumbotron />
       </div>
     );
   }
-
 }
 export default Home;
