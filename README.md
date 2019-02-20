@@ -1,4 +1,3 @@
-
 This is a stock market trading platform. You can look up, buy or sell stocks. You have $10,000 to start
 and it uses real time stock quotes from a alpha vantage and robinhood api's. You have to create an account 
 in order to trade stocks.
